@@ -65,8 +65,6 @@ Player::~Player()
 	numOfDisks = 0;
 }
 
-// Switched Pay coin into a boolean type 
-// Pay coin.
 void Player::payCoin(int cost)
 {
 	if (this->numOfCoins >= cost)
@@ -81,25 +79,19 @@ void Player::payCoin(int cost)
 	}
 }
 
-// Creates new army.
 void Player::placeNewArmies()
 {
-
 }
 
-// Moves army. Should work for both land and water.
 void Player::moveArmies()
 {
-
 }
 
-// Moves army over land.
 void Player::moveOverLand()
 {
 	
 }
 
-// Creates a city on the territory. Is not currently functional because we have no idea of what a city is.
 void Player::buildCity(Territory* territory)
 {
 	if (numOfDisks <= 0)
@@ -110,14 +102,13 @@ void Player::buildCity(Territory* territory)
 	numOfDisks--;
 }
 
-// Destroys army and deallocates dynamic memory.
+
 void Player::destroyArmy()
 {
 	armies.clear();
 	cout <<" army is destroyed!";
 }
 
-// Returns player name.
 string Player::getName()
 {
 	return name;
