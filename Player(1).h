@@ -27,7 +27,7 @@ class Player {
 public:
         Player();
 	Player(string name, int coinNum);
-	Player(const Player&);
+	Player(const Player&anotherPlayer);
 	~Player();
     Map map;
     Card card;
@@ -63,8 +63,6 @@ public:
     public:
 	    Army();
     	Army(Player*, Territory*);
-	    Army(const Army&);
-	    ~Army();
 	    string getOwnerName();
 	    Player* getOwner();
 	    Territory* getPosition();
@@ -82,9 +80,6 @@ class City
 	public:
 	City();
 	City(Player*, Territory*);
-	City(const City&);
-	~City();
-	// Useful methods.
 	string getOwnerName();
 	Player* getOwner();
 	Territory* getPosition();
