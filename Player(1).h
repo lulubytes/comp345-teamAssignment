@@ -39,7 +39,7 @@ public:
 	void setName(string n);
 	int getCoin();
 	void setCoin(int c);
-	//BiddingFacility* getBidFaci() const;
+
 	Player& operator= (const Player&);
 
 
@@ -83,7 +83,7 @@ public:
 	City(Player*, Territory*);
 	City(const City&);
 	~City();
-	// Useful methods.
+
 	string getOwnerName();
 	Player* getOwner();
 	Territory* getPosition();
