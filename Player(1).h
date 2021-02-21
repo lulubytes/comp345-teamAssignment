@@ -19,7 +19,10 @@ public:
     void MoveOverLand();
     void BuildCity();
     void DestroyArmy();
-
+    string getName()//need to implement
+    int getCoins()//need to implement
+    bidding *getBidFacility()//need to implement
+    
     Player();
 
     Player(const Map &map, const Card &card, const Biding &biding);
