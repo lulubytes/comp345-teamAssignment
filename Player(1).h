@@ -3,71 +3,75 @@
 #define PLAYER_H
 
 #include <string>
-#include <iostream>
 #include "Map.h"
-#include "Card.h"
-#include "Biding.h"
-using namespace std;
+#include "Bidding.h"
+
 using std::string;
 
-class Player {
-    
-    private:
+
+// Player class.
+class Player
+{
+	// Local variables.
+private:
 	string name;
 	int numOfCoins;
 	int numOfCubes;
 	int numOfDisks;
-	BiddingFacility* bidFaci;
+	bidding* bidFaci;
 	list<Territory*> playerTerritory;
-	list<Card*> playerHand;
-	list<City*> cities;
-	list<Army*> armies;
 
+	// Public methods
 public:
-        Player();
+	// Constructors and destructors.
+	Player();
 	Player(string name, int coinNum);
-	Player(const Player&anotherPlayer);
+	Player(const Player&);
 	~Player();
-    Map map;
-    Card card;
-    Biding biding;
-	void payCoin(int& cost);
-	void placeNewArmies(Territory* territory);
-	void moveArmies(Army*, Territory*);
-	void moveOverLand(Army*, Territory*);
+
+	// Methods.
+	void payCoin(int cost);
+	void placeNewArmies();
+	void moveArmies();
+	void moveOverLand();
 	void buildCity(Territory* territory);
-	void destroyArmy(Army*);
+	void destroyArmy();
 	string getName();
 	void setName(string n);
-	int getCoins();
-	void setCoins(int c);
-	BiddingFacility* getBidFaci() const;
-	list<Army*>* getArmies();
+	int getCoin();
+	void setCoin(int c);
+	//BiddingFacility* getBidFaci() const;
 	Player& operator= (const Player&);
 
-
-    private:
+	// Operators
+private:
 	friend ostream& operator<<(ostream&, const Player&);
 
 };
-    
-  class Army
+
+class Army
 {
+	// Local variables.
+private:
+	Player* owner;
+	Territory* position;
 
-    private:
-	    Player* owner;
-	    Territory* position;
+	// Public methods.
+public:
+	// Constructors and destructors.
+	Army();
+	Army(Player*, Territory*);
+	Army(const Army&);
+	~Army();
+	// Useful methods.
+	string getOwnerName();
+	Player* getOwner();
+	Territory* getPosition();
+	void setPosition(Territory*);
+	Army& operator=(Army&);
 
-
-    public:
-	    Army();
-    	Army(Player*, Territory*);
-	    string getOwnerName();
-	    Player* getOwner();
-	    Territory* getPosition();
-    	void setPosition(Territory*);
-    	Army& operator=(Army&);
-     private:
+	// Operators.
+private:
 	friend ostream& operator<<(ostream&, const Army&);
 };
 
@@ -75,18 +79,23 @@ class City
 {
 	Player* owner;
 	Territory* position;
-
-	public:
+	// Public methods.
+public:
+	// Constructors and destructors.
 	City();
 	City(Player*, Territory*);
+	City(const City&);
+	~City();
+	// Useful methods.
 	string getOwnerName();
 	Player* getOwner();
 	Territory* getPosition();
 	City& operator=(City&);
 
-	private:
+	// Operators.
+private:
 	friend ostream& operator<<(ostream&, const City&);
-
-    };
 };
+
+
 #endif
