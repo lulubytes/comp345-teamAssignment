@@ -9,10 +9,10 @@
 using std::string;
 
 
-// Player class.
+
 class Player
 {
-	// Local variables.
+
 private:
 	string name;
 	int numOfCoins;
@@ -21,15 +21,14 @@ private:
 	bidding* bidFaci;
 	list<Territory*> playerTerritory;
 
-	// Public methods
 public:
-	// Constructors and destructors.
+	
 	Player();
 	Player(string name, int coinNum);
 	Player(const Player&);
 	~Player();
 
-	// Methods.
+	
 	void payCoin(int cost);
 	void placeNewArmies();
 	void moveArmies();
@@ -43,7 +42,7 @@ public:
 	//BiddingFacility* getBidFaci() const;
 	Player& operator= (const Player&);
 
-	// Operators
+
 private:
 	friend ostream& operator<<(ostream&, const Player&);
 
@@ -51,26 +50,24 @@ private:
 
 class Army
 {
-	// Local variables.
+	.
 private:
 	Player* owner;
 	Territory* position;
 
-	// Public methods.
 public:
-	// Constructors and destructors.
+
 	Army();
 	Army(Player*, Territory*);
 	Army(const Army&);
 	~Army();
-	// Useful methods.
+
 	string getOwnerName();
 	Player* getOwner();
 	Territory* getPosition();
 	void setPosition(Territory*);
 	Army& operator=(Army&);
 
-	// Operators.
 private:
 	friend ostream& operator<<(ostream&, const Army&);
 };
@@ -79,9 +76,9 @@ class City
 {
 	Player* owner;
 	Territory* position;
-	// Public methods.
+
 public:
-	// Constructors and destructors.
+
 	City();
 	City(Player*, Territory*);
 	City(const City&);
@@ -92,7 +89,6 @@ public:
 	Territory* getPosition();
 	City& operator=(City&);
 
-	// Operators.
 private:
 	friend ostream& operator<<(ostream&, const City&);
 };
