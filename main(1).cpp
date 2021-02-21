@@ -1,36 +1,28 @@
 #include "Player.h"
+#include"pch.h"
 #include <iostream>
 
 int main()
 {
 	Territory* territory1 = new Territory();
-	Territory* territory2 = new Territory("Troy");
+	Territory* territory2 = new Territory();
 	Player* player1 = new Player("Achilles", 12);
+	Player* player2 = new Player();
 
-	std::cout << "\n Creat a new army:\t";
-	player1->placeNewArmies(territory1);
-	Army* army = player1->getArmies()->front();
-    
-	std::cout << "\n Moving army:\t";
-	player1->moveArmies(army, territory2);
 
-	std::cout << "\n Moving army overland:\t";
-	player1->moveOverLand(army, territory1);
 
-	std::cout << "\n Find territory1 owner:\t";
-	territory1->getOwner();
-
-	std::cout << "\n Find territory2 owner:\t";
-	territory2->getOwner();
-
-	std::cout << "\n Destory army:\t";
-	player1->destroyArmy(army);
-	
 	std::cout << "\n" << std::endl;
+	std::cout << "\n payCoin:\t";
+	player1->payCoin(10);
+	player2->payCoin(10);
+	player1->payCoin(100);
+	player2->setCoin(100);
+	player1->payCoin(100);
+
 
 	territory1 = nullptr;
 	territory2 = nullptr;
 	player1 = nullptr;
-
+	player2 = nullptr;
 	return 0;
 }
