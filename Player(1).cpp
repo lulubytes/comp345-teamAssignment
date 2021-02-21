@@ -99,7 +99,7 @@ void Player::moveArmies(Army* army, Territory* endLocation)
 	oldPos->removeArmy(army);
 	army->setPosition(endLocation);
 	endLocation->addArmy(army);
-	cout << "Moved " << *army << " from " << oldPos->getName() << " to " << endLocation->getName() << endl;
+	cout << this->name<< "moves his " << *army << " from " << oldPos->getName() << " to " << endLocation->getName() << endl;
 	oldPos = nullptr;
 }
 
@@ -109,7 +109,7 @@ void Player::moveOverLand(Army* army, Territory* endLocation)
 	oldPos->removeArmy(army);
 	army->setPosition(endLocation);
 	endLocation->addArmy(army);
-	cout << "Moved " << *army << " overland from " << oldPos->getName() << " to " << endLocation->getName() << endl;
+	cout << this->name<< "moves his " << *army << " overland from " << oldPos->getName() << " to " << endLocation->getName() << endl;
 	oldPos = nullptr;
 }
 
@@ -157,7 +157,6 @@ BiddingFacility* Player::getBidFaci() const {
 	return bidFaci;
 }
 
-// Returns list of player armies.
 list<Army*>* Player::getArmies()
 {
 	return &armies;
@@ -182,7 +181,6 @@ Player& Player::operator= (const Player& anotherPlayer)
 	else
 		bidFaci = nullptr;
 
-	// Shallow copy because the map is the same.
 	for (Territory* territory : anotherPlayer.playerTerritory)
 	{
 		playerTerritory.push_back(territory);
@@ -236,7 +234,6 @@ Player* Army::getOwner()
 	return owner;
 }
 
-// Returns pointer to current position.
 Territory* Army::getPosition()
 {
 	return position;
@@ -325,7 +322,6 @@ City& City::operator=(City& anotherCity)
 	if (&anotherCity == this)
 		return *this;
 
-	// Shallow copies because the owner and position will the same.
 	if (anotherCity.owner)
 	{
 		owner = anotherCity.owner;
