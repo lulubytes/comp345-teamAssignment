@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include "Cards/Cards.h"
-#include "BiddingFacility.h"
+#include "bidding.h"
 using namespace std;
 
 Player::Player() {
