@@ -7,7 +7,7 @@ using namespace std;
 
 //constructor
 bidding::bidding(int bid) {
-    this->bid = &bid;
+    this->bid = new int (bid);
 }
 
 //deep copy constructor
@@ -23,45 +23,47 @@ bidding::~bidding() {
     }
 }
 
-void bidding:: biddingFacility(vector<Player*> &players){
+int bidding:: biddingFacility(vector<Player*>&players){
     string winner = "";
-    int bid, highestBid = 0, index = 0 ;
+    int  highestBid = 0, index = 0 ;
     
-    for(int i = 0;i<players.size();i++){
-            cout << players[i]->getName() << ": how much would you like to pay?" << endl;
-            cin >> bid;
-            while (bid < 0 || bid > players[i]->getCoins()) {
-                cout << "This amount is not valid! "<<endl;
-                cin >> bid;
-            }
-                players[i]->getBidFacility()->setBid(bid);
+    //for(int i = 0;i<players.size();i++){
+            //cout << players[i]->getName() << ": how much would you like to pay?" << endl;
+            //cin >> bid;
+            //while (bid < 0 || bid > players[i]->getCoins()) {
+                //cout << "This amount is not valid! "<<endl;
+               // cin >> bid;
+            //}
+               // players[i]->getBidFacility()->setBid(bid);
         
         //if the player pointer is pointer to null then skip
-    }//let players bid 
+    //}//let players bid 
 
-    for(int i = 1;i<players.size();i++){
+    for(int i = 0;i<players.size();i++){
         highestBid =  players[0]->getBidFacility()->getBid();
-        
+        winner =  players[0]->getName();
             if( players[i]->getBidFacility()->getBid()>highestBid){
                 highestBid=players[i]->getBidFacility()->getBid();
                 index= i;
                 winner = players[index]->getName();
             }
         //find the largest one and mark the index    
+    //cout <<" the index1 is :"<< index <<endl;
     }   
     
-    for(int i = 1;i<players.size();i++){
+    for(int i = 0;i<players.size();i++){
         
-            if( players[i]->getBidFacility()->getBid()==highestBid&&players[i]->getName().compare(players[index]->getName())<0){
+            if( players[i]->getBidFacility()->getBid()==highestBid&&(players[i]->getName().compare(winner))>0){
                 highestBid=players[i]->getBidFacility()->getBid();
                 index= i;
                 winner = players[index]->getName();
             }
         //if bidding is equal to 0 or euqal to some players bidding, it will compare their last name and change the winner    
+    //cout <<" the index2 is :"<< index <<endl;
     }   
 
-    cout << "The winner is :"<<players[index]->getName()<<endl;
     players[index]->PayCoin(highestBid);//show the winner and pay his coin
+    return index;
 }
 
 //get the bid value
