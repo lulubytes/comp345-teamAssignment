@@ -5,37 +5,6 @@
 #include "BiddingFacility.h"
 using namespace std;
 
-
-void Player::PayCoin() {
-    if(){
-        
-    }
-    else{
-        
-    }
-    cout << "This is PayCoin" << endl;
-}
-
-void Player::PlaceNewArmies() {
-    cout << "This is PlaceNewArmies" << endl;
-}
-
-void Player::MoveArmies() {
-    cout << "This is MoveArmies" << endl;
-}
-
-void Player::MoveOverLand() {
-    cout << "This is MoveOverLand" << endl;
-}
-
-void Player::BuildCity() {
-    cout << "This is BuildCity" << endl;
-}
-void Player::DestroyArmy() {
-    cout << "This is DestroyArmy" << endl;
-}
-
-//constructor
 Player::Player() {
 	                name = "Player1";
 	                numOfCoins = 0;
@@ -95,5 +64,288 @@ Player::Player(const Player& anotherPlayer)
 	numOfCubes = anotherPlayer.numOfCubes;
 	numOfDisks = anotherPlayer.numOfDisks;
 }
+void Player::PayCoin(int& cost) {
+    if (this->numOfCoins >= cost)
+	{
+		numOfCoins = numOfCoins - cost;
+		cout << this->name << "now owns" << this->numOfCoins << endl;
+		
+	}
+	else
+	{
+		cout << this->name + " doesn't have enough coins to pay" << endl;
+	}
+}
+
+void Player::placeNewArmies(Territory* territory)
+{
+	if (numOfCubes <= 0)
+	{
+		cout << name << " does not have enough cubes to place a new army." << endl;
+		return;
+	}
+	else{
+	Army* army = new Army(this, territory);
+	territory->addArmy(army);
+	armies.push_back(army);
+	cout << this->name<< "created " << *army << " in " << territory->getName() << endl;
+	army = nullptr;
+	numOfCubes--
+	}
+}
+void Player::moveArmies(Army* army, Territory* endLocation)
+{
+	Territory* oldPos = army->getPosition();
+	oldPos->removeArmy(army);
+	army->setPosition(endLocation);
+	endLocation->addArmy(army);
+	cout << "Moved " << *army << " from " << oldPos->getName() << " to " << endLocation->getName() << endl;
+	oldPos = nullptr;
+}
+
+void Player::moveOverLand(Army* army, Territory* endLocation)
+{
+	Territory* oldPos = army->getPosition();
+	oldPos->removeArmy(army);
+	army->setPosition(endLocation);
+	endLocation->addArmy(army);
+	cout << "Moved " << *army << " overland from " << oldPos->getName() << " to " << endLocation->getName() << endl;
+	oldPos = nullptr;
+}
+
+
+void Player::buildCity(Territory* territory)
+{
+	if (numOfDisks <= 0)
+	{
+		cout << name << " does not have enough disks to place a new city." << endl;
+		return;
+	}
+	City* city = new City(this, territory);
+	this->cities.push_back(city);
+	cout << *city << " is built in " << territory->getName();
+	city = nullptr;
+	numOfDisks--;
+}
+void Player::destroyArmy(Army* army)
+{
+	army->getPosition()->removeArmy(army);
+	army->getOwner()->armies.remove(army);
+	cout << *army << " is destroyed!";
+	delete army;
+	army = nullptr;
+}
+
+string Player::getName()
+{
+	return name;
+}
+
+void Player::setName(string n) {
+	name = n;
+}
+
+int Player::getCoins() {
+	return numOfCoins;
+}
+
+void Player::setCoins(int c) {
+	numOfCoins = c;
+}
+
+BiddingFacility* Player::getBidFaci() const { 
+	return bidFaci;
+}
+
+// Returns list of player armies.
+list<Army*>* Player::getArmies()
+{
+	return &armies;
+}
+
+// toString
+ostream& operator<<(ostream& strm, const Player& player)
+{
+	return strm << player.name << ": " << player.numOfCoins << " coins";
+}
+
+Player& Player::operator= (const Player& anotherPlayer)
+{
+	if (&anotherPlayer == this)
+		return *this;
+
+	name = anotherPlayer.name;
+	numOfCoins = anotherPlayer.numOfCoins;
+
+	if (anotherPlayer.bidFaci)
+		bidFaci = new BiddingFacility(*(anotherPlayer.bidFaci));
+	else
+		bidFaci = nullptr;
+
+	// Shallow copy because the map is the same.
+	for (Territory* territory : anotherPlayer.playerTerritory)
+	{
+		playerTerritory.push_back(territory);
+	}
+
+	for (Card* card : anotherPlayer.playerHand)
+	{
+		playerHand.push_back(new Card(*card));
+	}
+
+	for (City* city : anotherPlayer.cities)
+	{
+		cities.push_back(new City(*city));
+	}
+
+	for (Army* army : anotherPlayer.armies)
+	{
+		armies.push_back(new Army(*army));
+	}
+
+	numOfCubes = anotherPlayer.numOfCubes;
+	numOfDisks = anotherPlayer.numOfDisks;
+
+	return *this;
+}
+
+
+Army::Army()
+{
+	owner = nullptr;
+	position = nullptr;
+}
+
+
+Army::Army(Player* anOwner, Territory* aPosition)
+{
+	owner = anOwner;
+	position = aPosition;
+}
+
+
+
+string Army::getOwnerName()
+{
+	return (*owner).getName();
+}
+
+
+Player* Army::getOwner()
+{
+	return owner;
+}
+
+// Returns pointer to current position.
+Territory* Army::getPosition()
+{
+	return position;
+}
+
+
+void Army::setPosition(Territory* newPosition)
+{
+	position = newPosition;
+}
+
+
+ostream& operator<<(ostream& strm, const Army& army)
+{
+	return strm << army.owner->getName() << "'s army";
+}
+
+
+Army& Army::operator=(Army& anotherArmy)
+{
+	if (&anotherArmy == this)
+		return *this;
+
+	if (anotherArmy.owner)
+	{
+		owner = anotherArmy.owner;
+	}
+	else
+	{
+		owner = nullptr;
+	}
+
+	if (anotherArmy.position)
+	{
+		position = anotherArmy.position;
+	}
+	else
+	{
+		position = nullptr;
+	}
+
+	return *this;
+}
+
+
+City::City()
+{
+	owner = nullptr;
+	position = nullptr;
+}
+
+
+City::City(Player* anOwner, Territory* aPosition)
+{
+	owner = anOwner;
+	position = aPosition;
+}
+
+
+string City::getOwnerName()
+{
+	return owner->getName();
+}
+
+
+Player* City::getOwner()
+{
+	return owner;
+}
+
+
+Territory* City::getPosition()
+{
+	return position;
+}
+
+
+ostream& operator<<(ostream& strm, const City& city)
+{
+	return strm << city.owner->getName() << "'s city";
+}
+
+
+City& City::operator=(City& anotherCity)
+{
+	if (&anotherCity == this)
+		return *this;
+
+	// Shallow copies because the owner and position will the same.
+	if (anotherCity.owner)
+	{
+		owner = anotherCity.owner;
+	}
+	else
+	{
+		owner = nullptr;
+	}
+
+	if (anotherCity.position)
+	{
+		position = anotherCity.position;
+	}
+	else
+	{
+		position = nullptr;
+	}
+
+	return *this;
+}
+
 
 
