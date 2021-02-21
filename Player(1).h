@@ -5,7 +5,6 @@
 #include <string>
 #include <iostream>
 #include "Map.h"
-#include "BiddingFacility.h"
 #include "Card.h"
 #include "Biding.h"
 using namespace std;
