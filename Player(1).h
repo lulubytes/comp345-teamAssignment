@@ -1,7 +1,4 @@
 
-#ifndef PROJECT_PLAYER_H
-#define PROJECT_PLAYER_H
-
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -28,14 +25,14 @@ class Player {
 	list<Army*> armies;
 
 public:
-    Player();
+        Player();
 	Player(string name, int coinNum);
 	Player(const Player&);
 	~Player();
     Map map;
     Card card;
     Biding biding;
-	bool payCoin(int& cost);
+	void payCoin(int& cost);
 	void placeNewArmies(Territory* territory);
 	void moveArmies(Army*, Territory*);
 	void moveOverLand(Army*, Territory*);
@@ -47,6 +44,13 @@ public:
 	void setCoins(int c);
 	BiddingFacility* getBidFaci() const;
 	list<Army*>* getArmies();
+	Player& operator= (const Player&);
+
+
+    private:
+	friend ostream& operator<<(ostream&, const Player&);
+
+};
     
   class Army
 {
@@ -66,22 +70,28 @@ public:
 	    Territory* getPosition();
     	void setPosition(Territory*);
     	Army& operator=(Army&);
+     private:
+	friend ostream& operator<<(ostream&, const Army&);
 };
 
 class City
 {
 	Player* owner;
 	Territory* position;
-    public:
-	       City();
-	       City(Player*, Territory*);
-           City(const City&);
-           ~City();
+
+	public:
+	City();
+	City(Player*, Territory*);
+	City(const City&);
+	~City();
 	// Useful methods.
 	string getOwnerName();
 	Player* getOwner();
 	Territory* getPosition();
 	City& operator=(City&);
+
+	private:
+	friend ostream& operator<<(ostream&, const City&);
 
     };
 };
