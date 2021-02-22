@@ -1,13 +1,13 @@
 #include "bidding.h"
 #include <iostream>
-#include "Player.h"
+#include "BPlayer.h"
 #include<vector>
 using namespace std;
 
 int main(){
     int numberOfPlayer = 0, coin = 0,bid = 0;
     string name = "";
-    vector<Player*> player;
+    vector<BPlayer*> player;
     cout<< "How many players do you have ?"<< endl;
     cin >> numberOfPlayer;
     while (numberOfPlayer < 2 || numberOfPlayer > 4) {
@@ -31,7 +31,7 @@ int main(){
             cout << "the value is not correct, reenter! " << endl;
             cin>> bid;
         }
-        Player* p = new Player(name, bid);
+        BPlayer* p = new BPlayer(name, bid);
         p->setCoin(coin);
         player.push_back(p);
     }
