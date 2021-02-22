@@ -35,12 +35,12 @@ Player::Player(const Player& anotherPlayer)
 {
 	name = anotherPlayer.name;
 	coin = anotherPlayer.coin;
-	
+
 	for (Territory* territory : anotherPlayer.territories)
 	{
 		territories.push_back(territory);
 	}
-	
+
 
 	for (Army* army : anotherPlayer.armies)
 	{
@@ -70,7 +70,7 @@ void Player::payCoin(int cost)
 	if (this->coin >= cost)
 	{
 		coin = coin - cost;
-		cout << this->name << " has now paied " << cost<< ", and left"<<this->coin << "coins."<< endl;
+		cout << this->name << " has now paied " << cost << ", and left" << this->coin << "coins." << endl;
 	}
 	else
 	{
@@ -83,15 +83,14 @@ void Player::placeNewArmies(Territory* territory, int numberOfArmies)
 {
 	if (this->armyOnhand > numberOfArmies)
 	{
-		territories.push_back(territory);
-		territory->army= territory->army+ numberOfArmies;
-		this->armies.push_back(10);
+		territory->AddArmy();
+		territory->numOfArmies = territory->numOfArmies + numberOfArmies;
 		cout << "Created " << numberOfArmies << " in " << territory << endl;
 		armyOnhand = armyOnhand - numberOfArmies;
 		numOfCubes--;
 	}
 	else {
-		cout << this->name << "only has " << this->armyOnhand << " armies left "  << endl;
+		cout << this->name << "only has " << this->armyOnhand << " armies left " << endl;
 	}
 
 }
@@ -100,10 +99,10 @@ void Player::placeNewArmies(Territory* territory, int numberOfArmies)
 void Player::moveArmies(Army* army, Territory* endLocation)
 {
 	Territory* oldPos = army->getPosition();
-	oldPos->removeArmy(army);
+	oldPos->RemoveArmy();
 	army->setPosition(endLocation);
-	endLocation->addArmy(army);
-	cout << "Moved " << *army << " from " << oldPos->countryName() << " to " << endLocation->getName() << endl;
+	endLocation->AddArmy();
+	cout << "Moved " << *army << " from " << oldPos->countryName << " to " << endLocation << endl;
 	oldPos = nullptr;
 }
 
