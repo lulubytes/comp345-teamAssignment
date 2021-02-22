@@ -10,13 +10,13 @@ int main() {
 
     // generate the cards
     deck->generateDeck();
-    cout << "Initial Deck\n" << endl;
+    cout << "Deck Object\n" << endl;
     deck->printDeck();
 
     // shuffle the deck
-    deck->shuffleDeck();
-    cout << "Shuffled Deck\n" << endl;
-    deck->printDeck();
+   // deck->shuffleDeck();
+   // cout << "Shuffled Deck\n" << endl;
+  //  deck->printDeck();
 
 
     cout << "Card Space\n" << endl;
@@ -25,12 +25,13 @@ int main() {
    
     //Testing exchange method
     
-    int index = 0;
+    int index =0 ;
     while (index >= 0) {
         hand->printHand();
-        cout << "Enter index number";
+        cout << "Enter index number \n";
         cin >> index;
         hand->exchange(index);
+        cout << "After exchange: \n" << endl;
     }
 
     // Deallocating heap.

@@ -34,7 +34,7 @@ string good;
 	void printCard();
 
 	// Operators
-	Card& operator=(const Card&);
+	//Card& operator=(const Card&);
 
 	//initialize the type vec
 	//void initial_vec_type_card();
@@ -57,14 +57,14 @@ public:
 	~Deck();
 	void generateDeck();
 	void printDeck();
-	void shuffleDeck();
+	//void shuffleDeck();
 	Card *draw();
 	Deck& operator=(const Deck&);
 private:
 
 Card *topCardptr;
 	Card cards[34];
-	static int  myRandomGenerator(int j);
+	
 		// Operators
 	friend ostream& operator<<(ostream&, const Deck&);
 

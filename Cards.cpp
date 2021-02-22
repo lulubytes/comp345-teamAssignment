@@ -12,64 +12,63 @@ Card::~Card()
 
 
 struct Good {
-    //2 players cards(27)
-    string ANCIENT_PHOENIX = "Ancient Phoenix";
-    string ANCIENT_TREE_SPIRIT = "Ancient Tree Spirit";
-    string CURSED_BANSHEE = "Cursed Banshee";
-    string CURSED_KING = "Cursed King";
-    string CURSED_TOWER = "Cursed Tower";
-    string DIRE_EYE = "Dire Eye";
-    string DIRE_GOBLIN = "Dire Goblin";
-    string FOREST_ELF = "Forest Elf";
-    string FOREST_PIXIE = "Forest Pixie";
+    string A_PHOENIX = "Ancient Phoenix";
+    string AT_SPIRIT = "Ancient Tree Spirit";
+    string C_BANSHEE = "Cursed Banshee";
+    string C_KING = "Cursed King";
+    string C_TOWER = "Cursed Tower";
+    string D_EYE = "Dire Eye";
+    string D_GOBLIN = "Dire Goblin";
+    string F_ELF = "Forest Elf";
+    string F_PIXIE = "Forest Pixie";
     string GRAVEYARD = "Graveyard";
-    string NIGHT_HYDRA = "Night Hydra";
-    string NIGHT_WIZARD = "Night Wizard";
-    string NOBLE_KNIGHT = "Noble Knight";
+    string N_HYDRA = "Night Hydra";
+    string N_WIZARD = "Night Wizard";
+    string N_KNIGHT = "Noble Knight";
     string STRONGHOLD = "Stronghold";
-    string ANCIENT_SAGE = "Ancient Sage";
-    string ANCIENT_WOODS = "Ancient Woods";
-    string CURSED_GARGOYLES = "Cursed Gargoyles";
-    string CURSED_MAUSOLEUM = "Cursed Mausoleum";
-    string DIRE_DRAGON = "Dire Dragon";
-    string DIRE_GIANT = "Dire Giant";
-    string DIRE_OGRE = "Dire Ogre";
-    string FOREST_GNOME = "Forest Gnome";
-    string FOREST_TREE_TOWN = "Forest Tree Town";
+    string A_SAGE = "Ancient Sage";
+    string A_WOODS = "Ancient Woods";
+    string C_GARGOYLES = "Cursed Gargoyles";
+    string C_MAUSOLEUM = "Cursed Mausoleum";
+    string D_DRAGON = "Dire Dragon";
+    string D_GIANT = "Dire Giant";
+    string D_OGRE = "Dire Ogre";
+    string F_GNOME = "Forest Gnome";
+    string FT_TOWN = "Forest Tree Town";
     string LAKE = "Lake";
-    string NIGHT_VILLAGE = "Night Village";
-    string NOBLE_HILLS = "Noble Hills";
-    string NOBLE_UNICORN = "Noble Unicorn";
-    //3 players cards(32)
-    string ARCANE_MANTICORE = "Arcane Manticore";
-    string ARCANE_TEMPLE = "Arcane Temple";
-    string MOUNTAIN_TREASURY = "Mountain Treasury";
-    string ARCANE_SPHINX = "Arcane Sphinx";
-    string MOUNTAIN_DWARF = "Mountain Dwarf";
-    //4 player cards(34)
+    string N_VILLAGE = "Night Village";
+    string N_HILLS = "Noble Hills";
+    string N_UNICORN = "Noble Unicorn";
+    //3 players 
+    string A_MANTICORE = "Arcane Manticore";
+    string A_TEMPLE = "Arcane Temple";
+    string M_TREASURY = "Mountain Treasury";
+    string A_SPHINX = "Arcane Sphinx";
+    string M_DWARF = "Mountain Dwarf";
+    //4 player 
     string CASTLE = "Castle";
     string CASTLE_2 = "Castle 2";
 };
-// All action on the card
+//  action 
 struct Action {
-        string MOVE_2_ARMY = "Move 2 army";
-        string MOVE_3_ARMY = "Move 3 army";
-        string MOVE_4_ARMY = "Move 4 army";
-        string MOVE_5_ARMY = "Move 5 army";
-        string MOVE_6_ARMY = "Move 6 army";
-        string BUILD_CITY = "Build city";
-        string ADD_1_ARMY = "Add 1 army";
-        string ADD_2_ARMY = "Add 2 army";
-        string ADD_3_ARMY = "Add 3 army";
-        string ADD_4_ARMY = "Add 4 army";
-        string DESTROY_1_ARMY = "Destroy 1 army";
+        string MOVE2 = "Move 2 army";
+        string MOVE3 = "Move 3 army";
+        string MOVE4 = "Move 4 army";
+        string MOVE5 = "Move 5 army";
+        string MOVE6 = "Move 6 army";
+        string BUILD = "Build city";
+        string ADD1 = "Add 1 army";
+        string ADD2 = "Add 2 army";
+        string ADD3 = "Add 3 army";
+        string ADD4 = "Add 4 army";
+        string DESTROY1 = "Destroy 1 army";
 };
 
 
 //Constructor
-Card::Card(string gd, string actn){
+Card::Card(string gd, string act){
     good = gd;
-    action[0] = actn;
+    action[0] = act;
 }
 
 Card::Card(string gd, string act1, string act2) {
@@ -102,28 +101,27 @@ string Card ::getAction2(){
 
 void Card::printCard() {
     
-    cout << "\tGood: "<< good<< endl;
-    cout << "\tAction: " << action[0]<< endl;
-    cout << "\tAction: " << action[1]<< endl; 
-    
+    cout << "Good: "<< good<< endl;
+    cout << "Action 1: " << action[0]<< endl;
+    cout << "Action 2: " << action[1]<< endl;  
 }
 // toString Cards
 ostream& operator<<(ostream& strm, const Card& card)
 {
 	return strm << "Good: " << card.good 
-    << "\nAction(s): " << card.action[0] << "\n" 
+    << "Action(s): " << card.action[0] << "\n" 
     << card.action[1] << endl;
 }
 
-Card& Card::operator=(const Card& anotherCard)
+Card& Card::operator=(const Card& another)
 {
-    if (&anotherCard == this)
+    if (&another == this)
         return *this;
 
-    good = anotherCard.good;
+    good = another.good;
     
-    action[0] = anotherCard.action[0];
-   action[1] = anotherCard.action[1];
+    action[0] = another.action[0];
+   action[1] = another.action[1];
 
     return *this;
 }
@@ -149,19 +147,18 @@ Deck :: ~Deck(){
 //Displays all deck
 void Deck::printDeck() {
     for (int i = 0; i < 34; i++) {
-        cout << "Card " << i + 1 << endl;
+        cout << "Card number: " << i + 1 << endl;
         cards[i].printCard();
         cout << endl;
     }
 }
-int Deck :: myRandomGenerator(int j) {
-   return rand() % j;
-}
+
 //Shuffle the content of the whole array.
-void Deck::shuffleDeck() {
-    srand(time(0)); 
-    shuffle(&cards[0], &cards[34], myRandomGenerator);
-}
+//void Deck::shuffleDeck() {
+   // srand(time(0)); 
+   // shuffle(&cards[0], &cards[34], myRandomGenerator);
+//}
+
 // topCardptr points to the top of the deck
 //When a card is drawn the pointer topCard move to the next card.
 //return the drawn card
@@ -177,45 +174,45 @@ void Deck ::generateDeck() {
     Action act;
 
     //each card with good and action
-      cards[0] = Card(gd.ARCANE_SPHINX,  act.ADD_3_ARMY, act.MOVE_4_ARMY);
-    cards[1] = Card(gd.ARCANE_MANTICORE,  act.ADD_4_ARMY, act.DESTROY_1_ARMY);
-    cards[2] = Card(gd.ARCANE_TEMPLE,  act.MOVE_3_ARMY);
-    cards[3] = Card(gd.ANCIENT_PHOENIX,  act.MOVE_5_ARMY);
-    cards[4] = Card(gd.ANCIENT_TREE_SPIRIT, act.ADD_4_ARMY);
-    cards[5] = Card(gd.ANCIENT_WOODS,  act.BUILD_CITY, act.ADD_1_ARMY);
+      cards[0] = Card(gd.A_SPHINX,  act.ADD3, act.MOVE4);
+    cards[1] = Card(gd.A_MANTICORE,  act.ADD4, act.DESTROY1);
+    cards[2] = Card(gd.A_TEMPLE,  act.MOVE3);
+    cards[3] = Card(gd.A_PHOENIX,  act.MOVE5);
+    cards[4] = Card(gd.AT_SPIRIT, act.ADD4);
+    cards[5] = Card(gd.A_WOODS,  act.BUILD, act.ADD1);
 
-    cards[6] = Card(gd.ANCIENT_SAGE , act.MOVE_3_ARMY);
-    cards[7] = Card(gd.CURSED_BANSHEE,  act.MOVE_6_ARMY);
-    cards[8] = Card(gd.CURSED_GARGOYLES,  act.MOVE_5_ARMY);
-    cards[9] = Card(gd.CURSED_KING ,  act.ADD_3_ARMY,act.MOVE_4_ARMY);
-    cards[10] = Card(gd.CURSED_MAUSOLEUM, act.BUILD_CITY);
-    cards[11] = Card(gd.CURSED_TOWER,  act.BUILD_CITY);
+    cards[6] = Card(gd.A_SAGE , act.MOVE3);
+    cards[7] = Card(gd.C_BANSHEE,  act.MOVE6);
+    cards[8] = Card(gd.C_GARGOYLES,  act.MOVE5);
+    cards[9] = Card(gd.C_KING ,  act.ADD3,act.MOVE4);
+    cards[10] = Card(gd.C_MAUSOLEUM, act.BUILD);
+    cards[11] = Card(gd.C_TOWER,  act.BUILD);
 
-    cards[12] = Card(gd.DIRE_DRAGON, act.ADD_3_ARMY,act.DESTROY_1_ARMY);
-    cards[13] = Card(gd.DIRE_GIANT,  act.ADD_3_ARMY,act.DESTROY_1_ARMY);
-    cards[14] = Card(gd.DIRE_EYE,  act.ADD_4_ARMY);
-    cards[15] = Card(gd.DIRE_GOBLIN, act.MOVE_4_ARMY);
-    cards[16] = Card(gd.DIRE_OGRE,  act.MOVE_2_ARMY);
+    cards[12] = Card(gd.D_DRAGON, act.ADD3,act.DESTROY1);
+    cards[13] = Card(gd.D_GIANT,  act.ADD3,act.DESTROY1);
+    cards[14] = Card(gd.D_EYE,  act.ADD4);
+    cards[15] = Card(gd.D_GOBLIN, act.MOVE4);
+    cards[16] = Card(gd.D_OGRE,  act.MOVE2);
 
-    cards[17] = Card(gd.LAKE,  act.ADD_2_ARMY,act.MOVE_3_ARMY);
-    cards[18] = Card(gd.FOREST_ELF,   act.ADD_3_ARMY,act.MOVE_2_ARMY);
-    cards[19] = Card(gd.FOREST_GNOME, act.MOVE_2_ARMY);
-    cards[20] = Card(gd.FOREST_TREE_TOWN ,  act.BUILD_CITY);
-    cards[21] = Card(gd.GRAVEYARD,  act.ADD_2_ARMY);
-    cards[22] = Card(gd.NOBLE_HILLS,  act.ADD_3_ARMY);
+    cards[17] = Card(gd.LAKE,  act.ADD2,act.MOVE3);
+    cards[18] = Card(gd.F_ELF,   act.ADD3,act.MOVE2);
+    cards[19] = Card(gd.F_GNOME, act.MOVE2);
+    cards[20] = Card(gd.FT_TOWN ,  act.BUILD);
+    cards[21] = Card(gd.GRAVEYARD,  act.ADD2);
+    cards[22] = Card(gd.N_HILLS,  act.ADD3);
 
-    cards[23] = Card(gd.NOBLE_KNIGHT,  act.ADD_4_ARMY, act.DESTROY_1_ARMY);
-    cards[24] = Card(gd.NOBLE_UNICORN,  act.MOVE_4_ARMY, act.ADD_1_ARMY);
-    cards[25] = Card(gd.NIGHT_HYDRA,  act.MOVE_4_ARMY,act.DESTROY_1_ARMY);
-    cards[26] = Card(gd.NIGHT_VILLAGE,  act.BUILD_CITY);
-    cards[27] = Card(gd.NIGHT_WIZARD,  act.ADD_4_ARMY, act.DESTROY_1_ARMY);
-    cards[28] = Card(gd.MOUNTAIN_DWARF, act.ADD_2_ARMY, act.DESTROY_1_ARMY);
+    cards[23] = Card(gd.N_KNIGHT,  act.ADD4, act.DESTROY1);
+    cards[24] = Card(gd.N_UNICORN,  act.MOVE4, act.ADD1);
+    cards[25] = Card(gd.N_HYDRA,  act.MOVE4,act.DESTROY1);
+    cards[26] = Card(gd.N_VILLAGE,  act.BUILD);
+    cards[27] = Card(gd.N_WIZARD,  act.ADD4, act.DESTROY1);
+    cards[28] = Card(gd.M_DWARF, act.ADD2, act.DESTROY1);
 
-    cards[29] = Card(gd.MOUNTAIN_TREASURY,  act.MOVE_3_ARMY);
-    cards[30] = Card(gd.CASTLE,  act.ADD_4_ARMY,act. BUILD_CITY);
-    cards[31] = Card(gd.CASTLE_2,  act.MOVE_3_ARMY,act.BUILD_CITY);
-    cards[32] = Card(gd.FOREST_PIXIE,  act.MOVE_4_ARMY);
-    cards[33] = Card(gd.STRONGHOLD,  act.BUILD_CITY);
+    cards[29] = Card(gd.M_TREASURY,  act.MOVE3);
+    cards[30] = Card(gd.CASTLE,  act.ADD4,act. BUILD);
+    cards[31] = Card(gd.CASTLE_2,  act.MOVE3,act.BUILD);
+    cards[32] = Card(gd.F_PIXIE,  act.MOVE4);
+    cards[33] = Card(gd.STRONGHOLD,  act.BUILD);
 
 }
 // toString Deck
@@ -265,23 +262,23 @@ Hand::~Hand(){
     deck = nullptr;
 }
 
-//Returns the cost of a card depending on where the card is placed in the cards space
-int Hand::getCardCost(int indexOfcard) {
-         if (indexOfcard == 0) return 0;
-    else if (indexOfcard == 1) return 1;
-    else if (indexOfcard == 2) return 1;
-    else if (indexOfcard == 3) return 2;
-    else if (indexOfcard == 4) return 2;
-    else if (indexOfcard == 5) return 3;
+//Returns the cost of a card according to  the place of card 
+int Hand::getCardCost(int index) {
+         if (index == 0) return 0;
+    else if (index == 1) return 1;
+    else if (index == 2) return 1;
+    else if (index == 3) return 2;
+    else if (index == 4) return 2;
+    else if (index == 5) return 3;
     else return -1;
   
 }
 
-//Shifts cards when a card is picked
+//Shifts cards left with the index number
 
 void Hand::shiftCards(int index) {
     for (int i = index; i < 7; i++) {
-        cards[i] = cards[i + 1];//cards are shift to the left
+        cards[i] = cards[i + 1];
     }
 }
 
@@ -296,13 +293,11 @@ Card* Hand::exchange(int cardIndex) {
 // shift cards to the left
     shiftCards(cardIndex);
 // draw a new card from the deck
-
     cards[7] = deck->draw(); 
     return pickedCard;
 }
 
-
-//To be implemented
+//print the content of hand
 void Hand::printHand() {
     //get the goods for each card
     string goodCard[7];
@@ -314,15 +309,15 @@ void Hand::printHand() {
 action1[i] = cards[i]->getAction1();
  action2[i] = cards[i]->getAction2();
 
- cout << "\tGood: "<< goodCard[i]<< endl;
-    cout << "\tAction1: " << action1[i]<< endl;
-    cout << "\tAction2: " << action2[i]<< endl; 
+ cout << "Good: "<< goodCard[i]<< endl;
+    cout << "Action 1: " << action1[i]<< endl;
+    cout << "Action 2: " << action2[i]<< endl; 
 
     }
     
 }
 
-// toString Hand
+// toString method
 ostream& operator<<(ostream& strm, const Hand& hand)
 {
 	return strm << "Hand have 7 cards to choose from";
