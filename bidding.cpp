@@ -53,7 +53,7 @@ int bidding:: biddingFacility(vector<BPlayer*>&players){
     
     for(int i = 0;i<players.size();i++){
         
-            if( players[i]->getBidFacility()->getBid()==highestBid&&(players[i]->getName().compare(winner))>0){
+            if( players[i]->getBidFacility()->getBid()==highestBid&&(players[i]->getName().compare(winner))<0){
                 highestBid=players[i]->getBidFacility()->getBid();
                 index= i;
                 winner = players[index]->getName();
