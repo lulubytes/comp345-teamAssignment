@@ -23,5 +23,6 @@ int main()
 	territory2 = nullptr;
 	player1 = nullptr;
 	player2 = nullptr;
+	
 	return 0;
 }
