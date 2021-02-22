@@ -1,7 +1,7 @@
 #include<vector>
 #include <iostream>
 #include "bidding.h"
-#include "Player.h"
+#include "BPlayer.h"
 
 using namespace std;
 
@@ -23,7 +23,7 @@ bidding::~bidding() {
     }
 }
 
-int bidding:: biddingFacility(vector<Player*>&players){
+int bidding:: biddingFacility(vector<BPlayer*>&players){
     string winner = "";
     int  highestBid = 0, index = 0 ;
     
