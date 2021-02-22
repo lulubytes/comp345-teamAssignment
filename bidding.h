@@ -2,7 +2,7 @@
 
 using namespace std;
 
-class Player;
+class BPlayer;
 
 class bidding {
 
@@ -21,7 +21,7 @@ public:
     ~bidding();
 
     //bid
-    static int  biddingFacility(vector<Player*> &players);
+    static int  biddingFacility(vector<BPlayer*> &players);
     
     //get bid value
     int getBid();
