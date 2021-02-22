@@ -38,7 +38,7 @@ public:
 	void setName(string n);
 	int getCoins();
 	void setCoin(int c);
-	list<Army*>* getArmies();
+	list<Army*>getArmies();
 	Player& operator= (const Player&);
 private:
 	friend ostream& operator<<(ostream&, const Player&);
