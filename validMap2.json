@@ -1,0 +1,126 @@
+{
+    "name":"Valid-Map-2",	
+    "continentCount":4,
+  "continents": [
+    {
+      "id": 1,
+      "name": "continent1",
+      "territoryCount":4,
+      "territorys": [
+        {
+          "id": 1,
+          "name": "territory1",
+          "continentId": 1,
+          "continentName": "continent1",
+          "nearTerritory": [11],
+          "nearTerritorySameContinent": [2,3,4]
+        },
+        {
+          "id": 2,
+          "name": "territory2",
+          "continentId": 1,
+          "continentName": "continent1",
+          "nearTerritory": [5],
+          "nearTerritorySameContinent": [1,3,4]
+        },
+        {
+          "id": 3,
+          "name": "territory3",
+          "continentId": 1,
+          "continentName": "continent1",
+          "nearTerritory": [],
+          "nearTerritorySameContinent": [1,2,4]
+        },
+        {
+            "id": 4,
+            "name": "territory4",
+            "continentId": 1,
+            "continentName": "continent1",
+            "nearTerritory": [],
+            "nearTerritorySameContinent": [1,2,3]
+          }
+      ],
+      "reachableContinents": [2,4]
+    },
+    {
+      "id": 2,
+      "name": "continent2",
+      "territoryCount":2,
+      "territorys": [
+        {
+          "id": 5,
+          "name": "territory5",
+          "continentId": 2,
+          "continentName": "continent2",
+          "nearTerritory": [2],
+          "nearTerritorySameContinent": [6]
+        },
+        {
+          "id": 6,
+          "name": "territory6",
+          "continentId": 2,
+          "continentName": "continent2",
+          "nearTerritory": [8],
+          "nearTerritorySameContinent": [5]
+        }
+      ],
+      "reachableContinents": [1,3]
+    },
+    {
+      "id": 3,
+      "name": "continent3",
+      "territoryCount":3,
+      "territorys": [
+        {
+            "id": 7,
+            "name": "territory7",
+            "continentId": 3,
+            "continentName": "continent3",
+            "nearTerritory": [],
+            "nearTerritorySameContinent": [8]
+        },
+        {
+          "id": 8,
+          "name": "territory8",
+          "continentId": 3,
+          "continentName": "continent3",
+          "nearTerritory": [6],
+          "nearTerritorySameContinent": [7,9]
+        },
+        {
+          "id": 9,
+          "name": "territory9",
+          "continentId": 3,
+          "continentName": "continent3",
+          "nearTerritory": [10],
+          "nearTerritorySameContinent": 8
+        }
+      ],
+      "reachableContinents": [2,4]
+    },
+    {
+      "id": 4,
+      "name": "continent4",
+      "territoryCount":2,
+      "territorys": [
+        {
+            "id": 10,
+            "name": "territory10",
+            "continentId": 4,
+            "continentName": "continent4",
+            "nearTerritory": [9],
+            "nearTerritorySameContinent": [11]
+        },
+        {
+          "id": 11,
+          "name": "territory11",
+          "continentId": 4,
+          "continentName": "continent4",
+          "nearTerritory": [1],
+          "nearTerritorySameContinent": [10]
+        }
+      ],
+      "reachableContinents": [1,3]
+    }
+  ]
+}
