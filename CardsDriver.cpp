@@ -8,16 +8,32 @@ class CardsDriver
     public:
     void run()
     {
-        Deck *deck = new Deck();
+        Player* player = new Player("Anakin", 14);
+        // create a deck
+        Deck* deck = new Deck(2);
 
-        Card *card1 = new Card("card1", "good1", "action1");
-        deck->SetDeck(card1);
+        // print cards information
+        deck->generateDeck();
+        cout << "Deck Object\n" << endl;
+      //  deck->printDeck();
 
-        cout << "deck set done, total cards: " << deck->GetDeck().size() << endl;
+        deck->shuffleDeck();
+      //  deck->printDeck();
 
-        Hand *hand = new Hand();
-        hand->SetHand(deck->draw());
-        cout << "deck draw, total cards:" << deck->GetDeck().size() << endl;
-        cout << "hand setup done, total cards:" << hand->GetHand().size() << endl;
+
+        cout << "Hand card information\n" << endl;
+
+        Hand* hand = new Hand(deck);
+
+        //Testing exchange method
+        int coins = 8;
+        int index = 0;
+        while (index >= 0) {
+       //     hand->printHand();
+            cout << "Choose an index number \n";
+            cin >> index;
+            hand->exchange(index, player);
+            cout << "After exchange: \n" << endl;
+        }
     }
 };

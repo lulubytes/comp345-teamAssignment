@@ -4,7 +4,7 @@
 #include "..\header\Player.h"
 #include <filesystem>
 using namespace std;
-using namespace std;
+
 
 
 
@@ -242,7 +242,7 @@ int Deck::myRandomGenerator(int j) {
 
 void Deck::shuffleDeck() {
 	srand(time(0));
-	random_shuffle(&cards[0], &cards[getNumCards()], myRandomGenerator);
+	std::shuffle(&cards[0], &cards[getNumCards()], myRandomGenerator);
 }
 
 //draw method

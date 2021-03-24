@@ -62,7 +62,7 @@ private:
 	//vector<Card*> cards;
 	Card* topCardptr;
 	Card cards[34];
-	int numPlayer
+	int numPlayer;
 };
 
 class Hand 
