@@ -13,10 +13,8 @@ public:
 	//constructor
 	string good;
 	string action[2];
-
 	string ability;
 	string andor;
-
 
 	Card();
 
@@ -25,18 +23,12 @@ public:
 	Card(const Card& c);
 	Card(string good, string action, string andor, string ability);
 	Card(string good, string firstAction, string secondAction, string andor, string ability);
-
-
-	//assignment operators
+	
 	Card& operator = (const Card& c);
-	//Accessors
+	
 	string getGood();
 	string getAction1();
 	string getAction2();
-
-	string getAndor();
-
-
 	string getAbility();
 
 	void printCard();
@@ -65,11 +57,9 @@ public:
 	int getNumCards();
 
 private:
-	Card* topCardptr;
+	Card* topCard;
 	Card cards[34];
-	int numPlayer;
-
-	//Output
+	int number;
 
 	friend ostream& operator<<(ostream&, const Deck&);
 };
@@ -82,16 +72,13 @@ private:
 public:
 	Hand() = default;
 	Hand(Deck* deck);
-	//CopyConstructor
 	Hand(const Hand& h);
-	//Deconstructor
 	~Hand();
-	int getCardCost(int indexOfcard);
+	int getCost(int indexOfcard);
 	Card* exchange(int cardIndex);
 	void printHand();
 	void shiftCards(int index);
 
-	//Output
 	friend ostream& operator<<(ostream&, const Hand&);
 	Hand& operator=(const Hand&);
 };
