@@ -6,17 +6,6 @@
 #include <algorithm>
 #include <stdio.h>
 using namespace std;
-
-
-
-
-
-
-
-
-#include <string>
-
-
 #include <random>
 
 using namespace std;
@@ -26,8 +15,8 @@ using namespace std;
 struct Good
 {
     //2 players cards(26)
-    string AN_P = "Ancient Phoenix";
-    string AN_TS = "Ancient Tree Spirit";
+    string Phoenix = "Ancient Phoenix";
+    string Spirit = "Ancient Tree Spirit";
     string CB = "Cursed Banshee";
     string KING = "Cursed King";
     string TOWER = "Cursed Tower";
@@ -63,21 +52,7 @@ struct Good
     string CASTLE = "Castle";
     string CASTLE2 = "Castle 2";
 };
-//  action
-struct Action
-{
-    string MOVE2 = "Move 2 army";
-    string MOVE3 = "Move 3 army";
-    string MOVE4 = "Move 4 army";
-    string MOVE5 = "Move 5 army";
-    string MOVE6 = "Move 6 army";
-    string BUILD = "Build city";
-    string ADD1 = "Add 1 army";
-    string ADD2 = "Add 2 army";
-    string ADD3 = "Add 3 army";
-    string ADD4 = "Add 4 army";
-    string DES = "Destroy 1 army";
-};
+
 
 struct Ability {
     string P1M = "+1 Move";
@@ -99,14 +74,12 @@ struct Ability {
     string P3VP2 = "+3 If you have 2 Mountain cards";
     string P1VPD = "+1 VP per Dire card";
 };
-struct Andor {
-    string SINGLE = " ";
-    string OR = "OR";
-    string AND = "AND";
-};
+
 
 
 //Card**********************************
+Card::Card() {};
+Card :: ~Card() {};
 Card::Card(string gd, string typ, string act, string abt)
 {
     good = gd;
@@ -123,8 +96,6 @@ Card::Card(string gd, string typ, string act1, string act2, string abt)
     ability = abt;
     andor = typ;
 }
-Card::Card() {};
-Card :: ~Card() {};
 
 //Copy constructor
 Card::Card(const Card& c)
@@ -134,7 +105,6 @@ Card::Card(const Card& c)
     action[1] = c.action[1];
 }
 
-//Getters
 string Card::getGood()
 {
     return good;
@@ -154,27 +124,22 @@ string Card::getAbility()
 {
     return ability;
 }
-string Card::getAndor() {
-    return andor;
-}
 //print information
 void Card::printCard()
 {
-
-    Andor comp;
-    cout << "\tGood: " << good << endl;
-    cout << "\tAbility: " << ability << endl;
-    cout << "\tAction: " << action[0] << endl;
-    if (andor != comp.SINGLE) {
-        if (andor == comp.AND) cout << "\tAND" << endl;
-        else if (andor == comp.OR)cout << "\tOR" << endl;
-        cout << "\tAction: " << action[1];
-    }
+    cout << "This is the card information: " << good << endl;
+    cout << "Good: " << good << endl;
+    cout << "Ability: " << ability << endl;
+    cout << "Action: " << action[0] << endl;
+    if (andor == "and") cout << "AND" << endl;
+    if (andor == "or")cout << "OR" << endl;
+    cout << "Action: " << action[1];
+    
 }
 // toString method
 ostream& operator<<(ostream& strm, const Card& card) {
     return strm << "Good: " << card.good
-        << "Action(s): " << card.action[0] << "\n"
+        << "Action: " << card.action[0] << "\n"
         << card.action[1] << endl;
 }
 
@@ -183,10 +148,7 @@ Card& Card::operator=(const Card& another)
 {
     if (&another == this)
         return *this;
-
     good = another.good;
-
-
     andor = another.andor;
     action[0] = another.action[0];
     action[1] = another.action[1];
@@ -197,48 +159,100 @@ Card& Card::operator=(const Card& another)
 
 //Deck****************************************
 
+
+//Creates the whole deck
+void Deck::generateDeck()
+{
+    Good gd;
+    Ability abt;
+
+    //each card with good and 2 or 1 action
+    cards[0] = Card(gd.PIXIE, "", "Move4", abt.P1A);
+    cards[1] = Card(gd.STRONGHOLD, "", "BuildCity", abt.P1VPD);
+    cards[2] = Card(gd.Phoenix, "", "Move5", abt.FYLING);
+    cards[3] = Card(gd.Spirit, "", "Add4", abt.THRE);
+    cards[4] = Card(gd.WOODS, "and", "BuildCity", "Add1", abt.P1A);
+    cards[5] = Card(gd.SAGE, "", "Move3", abt.P1VP);
+    cards[6] = Card(gd.CB, "", "Move6", abt.TE);
+    cards[7] = Card(gd.GAR, "", "Move5", abt.FYLING);
+    cards[8] = Card(gd.KING, "or", "Add3", "Move4", abt.OE);
+    cards[9] = Card(gd.MAUSOLEUM, "", "BuildCity", abt.P1M);
+    cards[10] = Card(gd.TOWER, "", "BuildCity", abt.P1VPF);
+    cards[11] = Card(gd.DRAGON, "and", "Add3", "Destory", abt.FYLING);
+    cards[12] = Card(gd.GIANT, "and", "Add3", "Destory", abt.ITA);
+    cards[13] = Card(gd.EYE, "", "Add4", abt.FYLING);
+    cards[14] = Card(gd.GOB, "", "Move4", abt.OE);
+
+    cards[15] = Card(gd.OGRE, "", "Move2", abt.P1P3);
+    cards[16] = Card(gd.LAKE, "or", "Add2", "Move3", abt.P1VPF);
+    cards[16] = Card(gd.ELF, "or", "Add3", "Move2", abt.P1A);
+    cards[18] = Card(gd.GNOME, "", "Move2", abt.THRE);
+    cards[19] = Card(gd.TOWN, "", "BuildCity", abt.P1M);
+    cards[20] = Card(gd.GRAVEYARD, "", "Add2", abt.P1VPC);
+    cards[21] = Card(gd.HILLS, "", "Add3", abt.P5VP3);
+    cards[22] = Card(gd.KNIGHT, "and", "Add4", "Destory", abt.P1M);
+    cards[23] = Card(gd.UNICORN, "and", "Move4", "Add1", abt.P1M);
+    cards[24] = Card(gd.HYDRA, "and", "Move4", "Destory", abt.P1A);
+    cards[25] = Card(gd.VILLAGE, "", "BuildCity", abt.P1A);
+    cards[26] = Card(gd.WIZARD, "and", "Add4", "Destory", abt.P1VPN);
+
+    //3 Player cards
+    if (Deck::number >= 3) {
+        cards[26] = Card(gd.SPHINX, "or", "Add3", "Move4", abt.FYLING);
+        cards[28] = Card(gd.MANTI, "and", "Add4", "Destory", abt.P1M);
+        cards[29] = Card(gd.TEMPLE, "", "Move3", abt.P1AR);
+        cards[30] = Card(gd.DWARF, "and", "Add2", "Destory", abt.P3VP2);
+        cards[31] = Card(gd.TREASURY, "", "Move3", abt.OA2C);
+    }
+    //4 Player cards
+    if (Deck::number >= 4) {
+        cards[32] = Card(gd.CASTLE, "or", "Add4", "BuildCity", abt.OE);
+        cards[33] = Card(gd.CASTLE2, "and", "Move3", "BuildCity", abt.OE);
+    }
+}
+
 Deck::Deck()
 {
-    //top of the card
-    topCardptr = &cards[0];
-    numPlayer = 2;
+    topCard = &cards[0];
+    number = 2;
 }
 
 //CopyConstructor
 Deck::Deck(const Deck& d)
 {
-    topCardptr = d.topCardptr;
+    topCard = d.topCard;
     for (int i = 0; i < 34; i++)
     {
         cards[i] = d.cards[i];
     }
 }
 
-Deck::Deck(int nPlayer) {
-    topCardptr = &cards[0];
-    numPlayer = nPlayer;
+Deck::Deck(int numPlay) {
+    topCard = &cards[0];
+    number = numPlay;
 }
 
 //Deconstructor
 Deck ::~Deck()
 {
 
-    topCardptr = nullptr;
+    topCard = nullptr;
 }
 //Displays all deck
 void Deck::printDeck()
 {
     for (int i = 0; i < 34; i++)
     {
+        cout << "This is the whole card information: " << i + 1 << endl;
         cout << "Card number: " << i + 1 << endl;
         cards[i].printCard();
         cout << endl;
     }
 }
 int Deck::getNumCards() {
-    if (numPlayer == 2) return 26;
-    if (numPlayer == 3) return 32;
-    if (numPlayer == 4) return 34;
+    if (number == 2) return 26;
+    if (number == 3) return 32;
+    if (number == 4) return 34;
 }
 
 int Deck::myRandomGenerator(int j) {
@@ -250,84 +264,29 @@ void Deck::shuffleDeck() {
     random_shuffle(&cards[0], &cards[getNumCards()], myRandomGenerator);
 }
 
-//draw method
+//draw card 
 Card* Deck::draw()
 {
-    Card* card = topCardptr;
-    topCardptr++;
+    Card* card = topCard;
+    topCard++;
     return card;
 }
 
-//Creates the whole deck
-void Deck::generateDeck()
-{
-    Good gd;
-    Action act;
-    Andor ctype;
-    Ability abt;
-
-    //each card with good and 2 or 1 action
-    cards[0] = Card(gd.PIXIE, ctype.SINGLE, act.MOVE4, abt.P1A);
-    cards[1] = Card(gd.STRONGHOLD, ctype.SINGLE, act.BUILD, abt.P1VPD);
-    cards[2] = Card(gd.AN_P, ctype.SINGLE, act.MOVE5, abt.FYLING);
-    cards[3] = Card(gd.AN_TS, ctype.SINGLE, act.ADD4, abt.THRE);
-    cards[4] = Card(gd.WOODS, ctype.AND, act.BUILD, act.ADD1, abt.P1A);
-    cards[5] = Card(gd.SAGE, ctype.SINGLE, act.MOVE3, abt.P1VP);
-    cards[6] = Card(gd.CB, ctype.SINGLE, act.MOVE6, abt.TE);
-    cards[7] = Card(gd.GAR, ctype.SINGLE, act.MOVE5, abt.FYLING);
-    cards[8] = Card(gd.KING, ctype.OR, act.ADD3, act.MOVE4, abt.OE);
-    cards[9] = Card(gd.MAUSOLEUM, ctype.SINGLE, act.BUILD, abt.P1M);
-    cards[10] = Card(gd.TOWER, ctype.SINGLE, act.BUILD, abt.P1VPF);
-    cards[11] = Card(gd.DRAGON, ctype.AND, act.ADD3, act.DES, abt.FYLING);
-    cards[12] = Card(gd.GIANT, ctype.AND, act.ADD3, act.DES, abt.ITA);
-    cards[13] = Card(gd.EYE, ctype.SINGLE, act.ADD4, abt.FYLING);
-    cards[14] = Card(gd.GOB, ctype.SINGLE, act.MOVE4, abt.OE);
-
-    cards[15] = Card(gd.OGRE, ctype.SINGLE, act.MOVE2, abt.P1P3);
-    cards[16] = Card(gd.LAKE, ctype.OR, act.ADD2, act.MOVE3, abt.P1VPF);
-    cards[16] = Card(gd.ELF, ctype.OR, act.ADD3, act.MOVE2, abt.P1A);
-    cards[18] = Card(gd.GNOME, ctype.SINGLE, act.MOVE2, abt.THRE);
-    cards[19] = Card(gd.TOWN, ctype.SINGLE, act.BUILD, abt.P1M);
-    cards[20] = Card(gd.GRAVEYARD, ctype.SINGLE, act.ADD2, abt.P1VPC);
-    cards[21] = Card(gd.HILLS, ctype.SINGLE, act.ADD3, abt.P5VP3);
-    cards[22] = Card(gd.KNIGHT, ctype.AND, act.ADD4, act.DES, abt.P1M);
-    cards[23] = Card(gd.UNICORN, ctype.AND, act.MOVE4, act.ADD1, abt.P1M);
-    cards[24] = Card(gd.HYDRA, ctype.AND, act.MOVE4, act.DES, abt.P1A);
-    cards[25] = Card(gd.VILLAGE, ctype.SINGLE, act.BUILD, abt.P1A);
-    cards[26] = Card(gd.WIZARD, ctype.AND, act.ADD4, act.DES, abt.P1VPN);
-
-    //3 Player cards
-    if (Deck::numPlayer >= 3) {
-        cards[26] = Card(gd.SPHINX, ctype.OR, act.ADD3, act.MOVE4, abt.FYLING);// 3 Player
-        cards[28] = Card(gd.MANTI, ctype.AND, act.ADD4, act.DES, abt.P1M);//3 Player
-        cards[29] = Card(gd.TEMPLE, ctype.SINGLE, act.MOVE3, abt.P1AR);// 3Player
-        cards[30] = Card(gd.DWARF, ctype.AND, act.ADD2, act.DES, abt.P3VP2);//3 Player
-        cards[31] = Card(gd.TREASURY, ctype.SINGLE, act.MOVE3, abt.OA2C);// 3 Player
-    }
-    //4 Player cards
-    if (Deck::numPlayer >= 4) {
-        cards[32] = Card(gd.CASTLE, ctype.OR, act.ADD4, act.BUILD, abt.OE);//4 player 
-        cards[33] = Card(gd.CASTLE2, ctype.AND, act.MOVE3, act.BUILD, abt.OE);//4 Player
-    }
-}
 // toString Deck
 ostream& operator<<(ostream& strm, const Deck& deck)
 {
-    return strm << "Deck has 34 cards";
+    return strm << "We have 34 cards totally";
 }
 // Assignment operator.
 Deck& Deck::operator=(const Deck& anotherDeck)
 {
     if (&anotherDeck == this)
         return *this;
-
     for (int i = 0; i < 34; i++)
     {
         cards[i] = anotherDeck.cards[i];
     }
-
-    topCardptr = &cards[0];
-
+    topCard = &cards[0];
     return *this;
 }
 
@@ -355,12 +314,11 @@ Hand::Hand(const Hand& h)
 }
 
 Hand::~Hand() {
-    //deck is not dynamically allocated pointer therefore, no need to delete it
     deck = nullptr;
 }
 
 //Returns the cost of a card 
-int Hand::getCardCost(int index)
+int Hand::getCost(int index)
 {
     if (index == 0)
         return 0;
@@ -387,19 +345,17 @@ void Hand::shiftCards(int index)
     }
 }
 
-//select the card from its position in the row
-
+//choose card and get the cost
 
 Card* Hand::exchange(int cardIndex) {
 
-    int cost = getCardCost(cardIndex);
-    //  if (!player->payCoin(cost)) return nullptr;
+    int cost = getCost(cardIndex);
 
-    Card* pickedCard = (cards[cardIndex]);// save picked card
+    Card* pickedCard = (cards[cardIndex]);
 
-    shiftCards(cardIndex);// shift cards to the left
+    shiftCards(cardIndex);
 
-    cards[5] = deck->draw(); // draw a new card from the deck
+    cards[5] = deck->draw(); 
 
     return pickedCard;
 }
@@ -409,7 +365,6 @@ void Hand::printHand()
 {
     //get the goods for each card
     string goodCard[6];
-
     string action1[6];
     string action2[6];
     for (int i = 0; i < 6; i++)
@@ -417,7 +372,7 @@ void Hand::printHand()
         goodCard[i] = cards[i]->getGood();
         action1[i] = cards[i]->getAction1();
         action2[i] = cards[i]->getAction2();
-
+        cout << "This is the information of hand cards: " << goodCard[i] << endl;
         cout << "Good: " << goodCard[i] << endl;
         cout << "Action 1: " << action1[i] << endl;
         cout << "Action 2: " << action2[i] << endl;
@@ -427,17 +382,15 @@ void Hand::printHand()
 // toString method
 ostream& operator<<(ostream& strm, const Hand& hand)
 {
-    return strm << "Hand have 6 cards to choose from";
+    return strm << "These are 6 cards in hand";
 }
 Hand& Hand::operator=(const Hand& anotherHand)
 {
     if (&anotherHand == this)
         return *this;
-
     if (anotherHand.deck)
     {
         deck = new Deck(*anotherHand.deck);
-
         for (int i = 0; i < 6; i++)
         {
             cards[i] = deck->draw();
