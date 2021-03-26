@@ -15,14 +15,17 @@ public:
 	string action[2];
 	string ability;
 	string andor;
+	int number;
 
 	Card();
 
 	~Card();
 	//copy constructor
 	Card(const Card& c);
-	Card(string good, string action, string andor, string ability);
-	Card(string good, string firstAction, string secondAction, string andor, string ability);
+	Card(string good, string andor,string action,  string ability);
+	Card(string good, string andor,string action,  string ability, int number);
+	Card(string good, string andor, string firstAction, string secondAction, string ability);
+	Card(string good, string andor,string firstAction, string secondAction,  string ability, int number);
 	
 	Card& operator = (const Card& c);
 	
@@ -30,6 +33,7 @@ public:
 	string getAction1();
 	string getAction2();
 	string getAbility();
+	int getNumber();
 
 	void printCard();
 
@@ -59,7 +63,7 @@ public:
 private:
 	Card* topCard;
 	Card cards[34];
-	int number;
+	int numberP;
 
 	friend ostream& operator<<(ostream&, const Deck&);
 };

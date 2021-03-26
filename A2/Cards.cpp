@@ -15,7 +15,7 @@ using namespace std;
 struct Good
 {
     //2 players cards(26)
-    string Phoenix = "Ancient Phoenix";
+    string PhOneElinix = "Ancient PhOneElinix";
     string Spirit = "Ancient Tree Spirit";
     string CB = "Cursed Banshee";
     string KING = "Cursed King";
@@ -44,7 +44,7 @@ struct Good
     string UNICORN = "Noble Unicorn";
     //3 players cards(32)
     string MANTI = "Arcane Manticore";
-    string TEMPLE = "Arcane Temple";
+    string TwoEliMPLE = "Arcane TwoElimple";
     string TREASURY = "Mountain Treasury";
     string SPHINX = "Arcane Sphinx";
     string DWARF = "Mountain Dwarf";
@@ -55,24 +55,24 @@ struct Good
 
 
 struct Ability {
-    string P1M = "+1 Move";
-    string P1A = "+1 Army";
+    string Plus1Move = "+1 Move";
+    string Plus1Army = "+1 Army";
     string FYLING = "Flying";
-    string OE = "1 Elixer";
-    string TE = "2 Elixer";
-    string THRE = "3 Elixer";
-    string OA2C = "1 Elixer and 2 coins";
-    string P1AR = "+1 VP per Arcaine card";
-    string P1VP = "+1 VP per Ancient card";
-    string P1VPF = "+1 VP per Fyling card";
-  string P1VP2 = "+1 VP per Forest card";
-    string P1VPC = "+1 VP per Cursed card";
-    string P1VPN = "+1 VP per Night card";
-    string P5VP3 = "All three noble cards = 5 VP";
-    string P3VP2 = "+3 If you have 2 Mountain cards";
-    string P1VPD = "+1 VP per Dire card";
-    string ITA = "Immune to attack";
-    string P1P3 = "+1 VP per 2 coins";
+    string OneEli = "1 Elixer";
+    string TwoEli = "2 Elixer";
+    string ThreeEli = "3 Elixer";
+    string OneEliAndTwoCoin = "1 Elixer and 2 coins";
+    string Plus1VpArcaine = "+1 VP per Arcaine card";
+    string Plus1VpAncient = "+1 VP per Ancient card";
+    string Plus1VpFlying = "+1 VP per Fyling card";
+  string Plus1VpForest = "+1 VP per Forest card";
+    string Plus1VpCursed = "+1 VP per Cursed card";
+    string Plus1VpNight = "+1 VP per Night card";
+    string All3Eli5VP = "All ThreeElie noble cards = 5 VP";
+    string Win3TwoMountain = "+3 If you have 2 Mountain cards";
+    string Plus1VpDire = "+1 VP per Dire card";
+    string Attack = "Immune to attack";
+    string Plus1TwoCoin = "+1 VP per 2 coins";
   
 };
 
@@ -87,6 +87,15 @@ Card::Card(string gd, string typ, string act, string abt)
     action[0] = act;
     ability = abt;
     andor = typ;
+   
+}
+Card::Card(string gd, string typ, string act, string abt,int num)
+{
+    good = gd;
+    action[0] = act;
+    ability = abt;
+    andor = typ;
+    number = num;
 }
 
 Card::Card(string gd, string typ, string act1, string act2, string abt)
@@ -96,6 +105,17 @@ Card::Card(string gd, string typ, string act1, string act2, string abt)
     action[1] = act2;
     ability = abt;
     andor = typ;
+   
+}
+
+Card::Card(string gd, string typ, string act1, string act2, string abt, int num)
+{
+    good = gd;
+    action[0] = act1;
+    action[1] = act2;
+    ability = abt;
+    andor = typ;
+    number = num;
 }
 
 //Copy constructor
@@ -124,6 +144,10 @@ string Card::getAction2()
 string Card::getAbility()
 {
     return ability;
+}
+int Card::getNumber()
+{
+    return number;
 }
 //print information
 void Card::printCard()
@@ -154,6 +178,7 @@ Card& Card::operator=(const Card& another)
     action[0] = another.action[0];
     action[1] = another.action[1];
     ability = another.ability;
+    number = another.number;
     return *this;
 }
 
@@ -161,61 +186,62 @@ Card& Card::operator=(const Card& another)
 //Deck****************************************
 
 
-//Creates the whole deck
+//CreaTwoElis the whole deck
 void Deck::generateDeck()
 {
+    
     Good gd;
     Ability abt;
 
     //each card with good and 2 or 1 action
-    cards[0] = Card(gd.PIXIE, "", "Move4", abt.P1A);
-    cards[1] = Card(gd.STRONGHOLD, "", "BuildCity", abt.P1VPD);
-    cards[2] = Card(gd.Phoenix, "", "Move5", abt.FYLING);
-    cards[3] = Card(gd.Spirit, "", "Add4", abt.THRE);
-    cards[4] = Card(gd.WOODS, "and", "BuildCity", "Add1", abt.P1A);
-    cards[5] = Card(gd.SAGE, "", "Move3", abt.P1VP);
-    cards[6] = Card(gd.CB, "", "Move6", abt.TE);
+    cards[0] = Card(gd.PIXIE, "", "Move4", abt.Plus1Army);
+    cards[1] = Card(gd.STRONGHOLD, "", "BuildCity", abt.Plus1VpDire);
+    cards[2] = Card(gd.PhOneElinix, "", "Move5", abt.FYLING);
+    cards[3] = Card(gd.Spirit, "", "Add4", abt.ThreeEli);
+    cards[4] = Card(gd.WOODS, "and", "BuildCity", "Add1", abt.Plus1Army);
+    cards[5] = Card(gd.SAGE, "", "Move3", abt.Plus1VpAncient);
+    cards[6] = Card(gd.CB, "", "Move6", abt.TwoEli);
     cards[7] = Card(gd.GAR, "", "Move5", abt.FYLING);
-    cards[8] = Card(gd.KING, "or", "Add3", "Move4", abt.OE);
-    cards[9] = Card(gd.MAUSOLEUM, "", "BuildCity", abt.P1M);
-    cards[10] = Card(gd.TOWER, "", "BuildCity", abt.P1VPF);
+    cards[8] = Card(gd.KING, "or", "Add3", "Move4", abt.OneEli);
+    cards[9] = Card(gd.MAUSOLEUM, "", "BuildCity", abt.Plus1Move);
+    cards[10] = Card(gd.TOWER, "", "BuildCity", abt.Plus1VpFlying);
     cards[11] = Card(gd.DRAGON, "and", "Add3", "Destory", abt.FYLING);
-    cards[12] = Card(gd.GIANT, "and", "Add3", "Destory", abt.ITA);
+    cards[12] = Card(gd.GIANT, "and", "Add3", "Destory", abt.Attack);
     cards[13] = Card(gd.EYE, "", "Add4", abt.FYLING);
-    cards[14] = Card(gd.GOB, "", "Move4", abt.OE);
+    cards[14] = Card(gd.GOB, "", "Move4", abt.OneEli);
 
-    cards[15] = Card(gd.OGRE, "", "Move2", abt.P1P3);
-    cards[16] = Card(gd.LAKE, "or", "Add2", "Move3", abt.P1VPF);
-    cards[17] = Card(gd.ELF, "or", "Add3", "Move2", abt.P1A);
-    cards[18] = Card(gd.GNOME, "", "Move2", abt.THRE);
-    cards[19] = Card(gd.TOWN, "", "BuildCity", abt.P1M);
-    cards[20] = Card(gd.GRAVEYARD, "", "Add2", abt.P1VPC);
-    cards[21] = Card(gd.HILLS, "", "Add3", abt.P5VP3);
-    cards[22] = Card(gd.KNIGHT, "and", "Add4", "Destory", abt.P1M);
-    cards[23] = Card(gd.UNICORN, "and", "Move4", "Add1", abt.P1M);
-    cards[24] = Card(gd.HYDRA, "and", "Move4", "Destory", abt.P1A);
-    cards[25] = Card(gd.VILLAGE, "", "BuildCity", abt.P1A);
-    cards[26] = Card(gd.WIZARD, "and", "Add4", "Destory", abt.P1VPN);
+    cards[15] = Card(gd.OGRE, "", "Move2", abt.Plus1TwoCoin);
+    cards[16] = Card(gd.LAKE, "or", "Add2", "Move3", abt.Plus1VpForest);
+    cards[17] = Card(gd.ELF, "or", "Add3", "Move2", abt.Plus1Army);
+    cards[18] = Card(gd.GNOME, "", "Move2", abt.ThreeEli);
+    cards[19] = Card(gd.TOWN, "", "BuildCity", abt.Plus1Move);
+    cards[20] = Card(gd.GRAVEYARD, "", "Add2", abt.Plus1VpCursed);
+    cards[21] = Card(gd.HILLS, "", "Add3", abt.All3Eli5VP);
+    cards[22] = Card(gd.KNIGHT, "and", "Add4", "Destory", abt.Plus1Move);
+    cards[23] = Card(gd.UNICORN, "and", "Move4", "Add1", abt.Plus1Move);
+    cards[24] = Card(gd.HYDRA, "and", "Move4", "Destory", abt.Plus1Army);
+    cards[25] = Card(gd.VILLAGE, "", "BuildCity", abt.Plus1Army);
+    cards[26] = Card(gd.WIZARD, "and", "Add4", "Destory", abt.Plus1VpNight);
 
     //3 Player cards
-    if (Deck::number >= 3) {
-        cards[27] = Card(gd.SPHINX, "or", "Add3", "Move4", abt.FYLING);
-        cards[28] = Card(gd.MANTI, "and", "Add4", "Destory", abt.P1M);
-        cards[29] = Card(gd.TEMPLE, "", "Move3", abt.P1AR);
-        cards[30] = Card(gd.DWARF, "and", "Add2", "Destory", abt.P3VP2);
-        cards[31] = Card(gd.TREASURY, "", "Move3", abt.OA2C);
+    if (Deck::numberP >= 3) {
+        cards[27] = Card(gd.SPHINX, "or", "Add3", "Move4", abt.FYLING, 3);
+        cards[28] = Card(gd.MANTI, "and", "Add4", "Destory", abt.Plus1Move, 3);
+        cards[29] = Card(gd.TwoEliMPLE, "", "Move3", abt.Plus1VpArcaine, 3);
+        cards[30] = Card(gd.DWARF, "and", "Add2", "Destory", abt.Win3TwoMountain, 3);
+        cards[31] = Card(gd.TREASURY, "", "Move3", abt.OneEliAndTwoCoin, 3);
     }
     //4 Player cards
-    if (Deck::number >= 4) {
-        cards[32] = Card(gd.CASTLE, "or", "Add4", "BuildCity", abt.OE);
-        cards[33] = Card(gd.CASTLE2, "and", "Move3", "BuildCity", abt.OE);
+    if (Deck::numberP >= 4) {
+        cards[32] = Card(gd.CASTLE, "or", "Add4", "BuildCity", abt.OneEli, 4);
+        cards[33] = Card(gd.CASTLE2, "and", "Move3", "BuildCity", abt.OneEli, 4);
     }
 }
 
 Deck::Deck()
 {
     topCard = &cards[0];
-    number = 2;
+    numberP = 2;
 }
 
 //CopyConstructor
@@ -230,7 +256,7 @@ Deck::Deck(const Deck& d)
 
 Deck::Deck(int numPlay) {
     topCard = &cards[0];
-    number = numPlay;
+    numberP = numPlay;
 }
 
 //Deconstructor
@@ -251,9 +277,9 @@ void Deck::printDeck()
     }
 }
 int Deck::getNumCards() {
-    if (number == 2) return 26;
-    if (number == 3) return 32;
-    if (number == 4) return 34;
+    if (numberP == 2) return 26;
+    if (numberP == 3) return 32;
+    if (numberP == 4) return 34;
 }
 
 int Deck::myRandomGenerator(int j) {
@@ -362,7 +388,7 @@ Card* Hand::exchange(int cardIndex) {
     return pickedCard;
 }
 
-//print the content of hand
+//print the conTwoElint of hand
 void Hand::printHand()
 {
     //get the goods for each card
