@@ -65,14 +65,15 @@ struct Ability {
     string P1AR = "+1 VP per Arcaine card";
     string P1VP = "+1 VP per Ancient card";
     string P1VPF = "+1 VP per Fyling card";
-    string ITA = "Immune to attack";
-    string P1P3 = "+1 VP per 3 coins";
-    string P1VP2 = "+1 VP per Forest card";
+  string P1VP2 = "+1 VP per Forest card";
     string P1VPC = "+1 VP per Cursed card";
     string P1VPN = "+1 VP per Night card";
     string P5VP3 = "All three noble cards = 5 VP";
     string P3VP2 = "+3 If you have 2 Mountain cards";
     string P1VPD = "+1 VP per Dire card";
+    string ITA = "Immune to attack";
+    string P1P3 = "+1 VP per 2 coins";
+  
 };
 
 
@@ -185,7 +186,7 @@ void Deck::generateDeck()
 
     cards[15] = Card(gd.OGRE, "", "Move2", abt.P1P3);
     cards[16] = Card(gd.LAKE, "or", "Add2", "Move3", abt.P1VPF);
-    cards[16] = Card(gd.ELF, "or", "Add3", "Move2", abt.P1A);
+    cards[17] = Card(gd.ELF, "or", "Add3", "Move2", abt.P1A);
     cards[18] = Card(gd.GNOME, "", "Move2", abt.THRE);
     cards[19] = Card(gd.TOWN, "", "BuildCity", abt.P1M);
     cards[20] = Card(gd.GRAVEYARD, "", "Add2", abt.P1VPC);
@@ -198,7 +199,7 @@ void Deck::generateDeck()
 
     //3 Player cards
     if (Deck::number >= 3) {
-        cards[26] = Card(gd.SPHINX, "or", "Add3", "Move4", abt.FYLING);
+        cards[27] = Card(gd.SPHINX, "or", "Add3", "Move4", abt.FYLING);
         cards[28] = Card(gd.MANTI, "and", "Add4", "Destory", abt.P1M);
         cards[29] = Card(gd.TEMPLE, "", "Move3", abt.P1AR);
         cards[30] = Card(gd.DWARF, "and", "Add2", "Destory", abt.P3VP2);
@@ -260,8 +261,9 @@ int Deck::myRandomGenerator(int j) {
 }
 
 void Deck::shuffleDeck() {
-    srand(time(0));
-    random_shuffle(&cards[0], &cards[getNumCards()], myRandomGenerator);
+    srand(unsigned( time(0)));
+     
+   // random_shuffle(&cards[0], &cards[getNumCards()], myRandomGenerator);
 }
 
 //draw card 
