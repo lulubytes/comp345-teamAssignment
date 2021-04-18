@@ -1,10 +1,15 @@
+
 #include "..\header\GameInitializer.h"
 #include <filesystem>
 
 
 
 
+
 namespace fs = std::experimental::filesystem;
+
+
+
 
 GameInitializer::GameInitializer() {
 
@@ -15,7 +20,6 @@ GameInitializer::GameInitializer() {
 	}
 
 }
-
 
 GameInitializer::~GameInitializer() {
 	if (this->mapLoader != NULL) {
@@ -239,16 +243,12 @@ Map* GameInitializer::choose_Map() {
 }
 
 
-
-
-
 //initialize the player
 vector<Player*>& GameInitializer::choose_Player() {
 
 	int  choice = 0;
 	string color1;
 	string color2;
-	int mode = 0;
 	string name1;
 	string name2;
 	string winner;
@@ -261,15 +261,11 @@ vector<Player*>& GameInitializer::choose_Player() {
 	vector<Card*> c1;
 	vector<Card*>c2;
 
-	cout << "How many Player you would like to play with? \n1 -- two PLAYERS\n2 -- three PLAYERS\n3 -- four PLAYERS" << endl;
+	cout << "How kind of mode do you want to play ? \n1 -- Two Human PLAYERS\n2 -- one human player and  one computer player\n3 --two compters players" << endl;
 	cin >> choice;
 	while (true) {
 		if (choice == 1) {
-			
-			
-			cout << "What kinds of strategy do you want to play? \nenter 0--Human \n enter 1--Greedy computer \nenter 2--Moderate computer" << endl;
-			cin >> mode;
-			
+
 			system("cls");
 			this->game_Show();
 			cout << "Please insert first Player's name" << endl;
@@ -290,99 +286,63 @@ vector<Player*>& GameInitializer::choose_Player() {
 			}
 
 			b1 = new Bidding(name1, 0);
-			Player *p1 = new Player(name1, 10, 0, t1, c1, b1, color1);
+			Player *p1 = new Player(name1, 14, 0, t1, c1, b1, color1);
 
 			p1->getBid()->SetBid();
 
-			if (mode == 0) {
-				cout << "Please insert second Player's name" << endl;
-				cin >> name2;
-				while (name2 == "" || name2 == name1) {
-					if (name2 == "") {
-						cout << "Player's name can not be empty, please insert again" << endl;
-						cin >> name2;
-					}
-					else {
-						cout << "Player's name can not be the same as the first player, Please insert again." << endl;
-						cin >> name2;
-					}
-
+			cout << "Please insert second Player's name" << endl;
+			cin >> name2;
+			while (name2 == "" || name2 == name1) {
+				if (name2 == "") {
+					cout << "Player's name can not be empty, please insert again" << endl;
+					cin >> name2;
+				}
+				else {
+					cout << "Player's name can not be the same as the first player, Please insert again." << endl;
+					cin >> name2;
 				}
 
-				cout << "Please choose a color \n*****red*****\n*****yellow*****\n*****blue*****\n*****green*****" << endl;
-				cin >> color2;
-				cout << endl;
-				while (true) {
-					if ((color1 != color2) && (color2 == "red" || color2 == "yellow" || color2 == "blue" || color2 == "green"))
-						break;
-					else if (color1 == color2) {
-						cout << "Color can not be the same as the first player's color, Please choose again!" << endl;
-						cin >> color2;
-						cout << endl;
-					}
-					else {
-						cout << "This color does not exist, please insert the color color!!" << endl;
-						cin >> color2;
-						cout << endl;
-					}
+			}
 
+			cout << "Please choose a color \n*****red*****\n*****yellow*****\n*****blue*****\n*****green*****" << endl;
+			cin >> color2;
+			cout << endl;
+			while (true) {
+				if ((color1 != color2) && (color2 == "red" || color2 == "yellow" || color2 == "blue" || color2 == "green"))
+					break;
+				else if (color1 == color2) {
+					cout << "Color can not be the same as the first player's color, Please choose again!" << endl;
+					cin >> color2;
+					cout << endl;
 				}
-				b2 = new Bidding(name2, 0);
-				Player* p2 = new Player(name2, 10, 0, t1, c1, b2, color2);
-				p2->getBid()->SetBid();
-				system("pauser");
-				system("cls");
-				this->game_Show();
-				cout << "Players Information:\n\n**First Player**  " << *p1 << "  \n**Second Player**  " << *p2 << "  " << endl;
+				else {
+					cout << "This color does not exist, please insert the color color!!" << endl;
+					cin >> color2;
+					cout << endl;
+				}
 
-				this->players.push_back(p1);
-				this->players.push_back(p2);
-
-				cout << " ** " << p1->GetName() << " **  and  ** " << p2->GetName() << " ** \n*****welcome to the game , Hope you enjoy the Game!*****\n" << endl;
-			
 			}
-			
-			else if (mode == 1) {
+			b2 = new Bidding(name2, 0);
+			Player *p2 = new Player(name2, 14, 0, t1, c1, b2, color2);
+			p2->getBid()->SetBid();
 
-				b2 = new Bidding("Greedy Computer", 5);
-				Player* p2 = new Player("Greedy Computer", 10, 0, t1, c1, b2, "green");
+			system("pauser");
+			system("cls");
+			this->game_Show();
+			cout << "Players Information:\n\n**First Player**  " << *p1 << "  \n**Second Player**  " << *p2 << "  " << endl;
 
-				system("pauser");
-				system("cls");
-				this->game_Show();
-				cout << "Players Information:\n\n**First Player**  " << *p1 << "  \n**Second Player**  " << *p2 << "  " << endl;
+			this->players.push_back(p1);
+			this->players.push_back(p2);
 
-				this->players.push_back(p1);
-				this->players.push_back(p2);
-
-				cout << " ** " << p1->GetName() << " **  and  ** " << p2->GetName() << " ** \n*****welcome to the game , Hope you enjoy the Game!*****\n" << endl;
-			
-			
-			}
-			
-			else {
-				b2 = new Bidding("Moderate Computer", 5);
-				Player* p2 = new Player("Moderate Computer", 10, 0, t1, c1, b2, "green");
-
-				system("pauser");
-				system("cls");
-				this->game_Show();
-				cout << "Players Information:\n\n**First Player**  " << *p1 << "  \n**Second Player**  " << *p2 << "  " << endl;
-
-				this->players.push_back(p1);
-				this->players.push_back(p2);
-
-				cout << " ** " << p1->GetName() << " **  and  ** " << p2->GetName() << " ** \n*****welcome to the game , Hope you enjoy the Game!*****\n" << endl;
-			}
-
-
-
-
+			cout << " ** " << p1->GetName() << " **  and  ** " << p2->GetName() << " ** \n*****welcome to the game , Hope you enjoy the Game!*****\n" << endl;
 
 			vBid.push_back(b1);
 			vBid.push_back(b2);
 			int winnerIndex;
 			winner = Bidding::CompareBid(vBid);
+
+
+
 			for (int i = 0; i < players.size(); i++) {
 				if (players[i]->GetName() == winner) {
 					winnerIndex = i;
@@ -440,9 +400,9 @@ vector<Player*>& GameInitializer::choose_Player() {
 
 			//player get card for each term ,until both of them get 13 cards.
 			while (players[winnerIndex]->GetHandCard().size() <= 3 && players[1 - winnerIndex]->GetHandCard().size() <= 3) {
-				this->playGame(mode,winnerIndex, hand, deck);
+				this->playGame(winnerIndex, hand, deck,this);
 				system("pause");
-				this->playGame(mode,1 - winnerIndex, hand, deck);
+				this->playGame(1 - winnerIndex, hand, deck,this);
 			}
 
 			s->computeScores(players[0], players[1], this->map);
@@ -457,16 +417,238 @@ vector<Player*>& GameInitializer::choose_Player() {
 		}
 		else if (choice == 2) {
 
-			cout << "We wil not try 3 players game, Only 2 players is allowed for Assignment. Please try again!\n";
-			cout << "How many Player you would like to play with? \n1 -- two PLAYERS\n2 -- three PLAYERS\n3 -- four PLAYERS" << endl;
-			cin >> choice;
+
+			system("cls");
+			this->game_Show();
+			cout << "Please insert Human Player's name" << endl;
+			cin >> name1;
+			while (name1 == "") {
+				cout << "Player's name can not be empty, please enter again" << endl;
+				cin >> name1;
+			}
+			cout << "Please choose a color \n*****red*****\n*****yellow*****\n*****blue*****\n*****green*****" << endl;
+			cin >> color1;
+			while (true) {
+				if ((color1 == "red") || (color1 == "yellow") || (color1 == "blue") || (color1 == "green"))
+					break;
+				else {
+					cout << "This color does not exist, please insert the color color!" << endl;
+					cin >> color1;
+				}
+			}
+
+			b1 = new Bidding(name1, 0);
+			Player *p1 = new Player(name1, 10, 0, t1, c1, b1, color1);
+
+			p1->getBid()->SetBid();
+
+
+			int computerChoice;
+
+			cout << "what's kind of computer you woud like to play with? \n1-- Greedy Computer \n2 --Moderate computer" << endl;
+			cin >> computerChoice;
+			Player *p2;
+			while (true) {
+
+				int ran = 0;
+				if (computerChoice == 1) {
+					ran = rand() % 15;
+
+					b2 = new Bidding("Greedy Player", ran);
+
+					p2 = new Player("Greedy Player", 14, 0, t1, c1, b2, color2);
+					break;
+				}
+
+				else if (computerChoice == 2) {
+					ran = rand() % 15;
+					b2 = new Bidding("Moderate Player", ran);
+
+					p2 = new Player("Moderate Player", 14, 0, t1, c1, b2, color2);
+					break;
+				}
+				else {
+					cout << "invalid input, please try again" << endl;
+					cin >> computerChoice;
+				}
+			}
+
+
+			system("pauser");
+			system("cls");
+			this->game_Show();
+			cout << "Players Information:\n\n**First Player**  " << *p1 << "  \n**Second Player**  " << *p2 << "  " << endl;
+
+			this->players.push_back(p1);
+			this->players.push_back(p2);
+
+			cout << " ** " << p1->GetName() << " **  and  ** " << p2->GetName() << " ** \n*****welcome to the game , Hope you enjoy the Game!*****\n" << endl;
+
+			vBid.push_back(b1);
+			vBid.push_back(b2);
+			int winnerIndex;
+			winner = Bidding::CompareBid(vBid);
+			for (int i = 0; i < players.size(); i++) {
+				if (players[i]->GetName() == winner) {
+					winnerIndex = i;
+				}
+			}
+			this->assignCoin();
+			for (int i = 0; i < players.size(); i++) {
+				if (players[i]->GetName() == winner) {
+					//winner pay coins
+					players[i]->PayCoin(players[i]->getBid()->GetBid());
+					//pool receive coins;
+					this->pool += players[i]->getBid()->GetBid();
+
+				}
+			}
+
+
+			// set original region for each players
+			this->SetInitialRegion(winnerIndex);
+
+
+
+			//Part 2 point 1 remove 3 and 4 cards
+			cout << "\nWe have " << players.size() << " of players, so remove the \"4\" and \"3\" cards\n" << endl;
+
+			//this->deckInitial();
+			Deck* deck = new Deck(players.size());//creat the deck 
+
+			deck->generateDeck();//generate the deck
+
+
+
+			cout << "\n*************************Before the Shuffle********************************" << endl;
+			cout << *deck;
+
+			deck->shuffleDeck();//shuffle the Deck
+			cout << "****************************After the Shuffle**************************************" << endl;
+			cout << *deck;
+
+
+
+
+			//loop for the game until the end
+			Hand* hand = new Hand(deck);//drwa the 6 face-up card from the deck
+
+			Score *s = new Score();
+
+			//player get card for each term ,until both of them get 13 cards.
+			while (players[winnerIndex]->GetHandCard().size() < 10 && players[1 - winnerIndex]->GetHandCard().size() < 10) {
+				this->playGame(winnerIndex, hand, deck,this);
+				system("pause");
+				this->playGame(1 - winnerIndex, hand, deck,this);
+			}
+
+
+
+			s->computeScores(players[0], players[1], this->map);
+
+
+
+			cout << "----------------------------------------  THE END--------------------------------------------------" << endl;
+
+			system("pause");
+
+			break;
 
 		}
 		else if (choice == 3) {
 
-			cout << "We wil not try 4 players game, Only 2 players is allowed for Assignment. Please try again!\n";
-			cout << "How many Player you would like to play with? \n1 -- two	PLAYERS\n2 -- three PLAYERS\n3 -- four PLAYERS" << endl;
-			cin >> choice;
+			int ran = rand() % 15;
+			cout << ran << endl;
+			b1 = new Bidding("Greedy Player", ran);
+			Player *	p1 = new Player("Greedy Player", 14, 0, t1, c1, b1, color2);
+
+
+			int ran2 = rand() % 15;
+			cout << ran << endl;
+			b2 = new Bidding("Moderate Player", ran2);
+			Player *	p2 = new Player("Moderate Player", 14, 0, t1, c1, b2, color2);
+
+			system("pauser");
+			system("cls");
+			this->game_Show();
+			cout << "Players Information:\n\n**First Player**  " << *p1 << "  \n**Second Player**  " << *p2 << "  " << endl;
+
+			this->players.push_back(p1);
+			this->players.push_back(p2);
+
+			cout << " ** " << p1->GetName() << " **  and  ** " << p2->GetName() << " ** \n*****welcome to the game , Hope you enjoy the Game!*****\n" << endl;
+
+			vBid.push_back(b1);
+
+			vBid.push_back(b2);
+
+			int winnerIndex;
+
+			winner = Bidding::CompareBid(vBid);
+
+			for (int i = 0; i < players.size(); i++) {
+
+				if (players[i]->GetName() == winner) {
+					winnerIndex = i;
+
+				}
+			}
+			this->assignCoin();
+			for (int i = 0; i < players.size(); i++) {
+				if (players[i]->GetName() == winner) {
+					//winner pay coins
+					players[i]->PayCoin(players[i]->getBid()->GetBid());
+					//pool receive coins;
+					this->pool += players[i]->getBid()->GetBid();
+
+				}
+			}
+
+
+			// set original region for each players
+			this->SetInitialRegion(winnerIndex);
+
+
+			//Part 2 point 1 remove 3 and 4 cards
+			cout << "\nWe have " << players.size() << " of players, so remove the \"4\" and \"3\" cards\n" << endl;
+
+			//this->deckInitial();
+			Deck* deck = new Deck(players.size());//creat the deck 
+
+			deck->generateDeck();//generate the deck
+
+
+
+			cout << "\n*************************Before the Shuffle********************************" << endl;
+			cout << *deck;
+
+			deck->shuffleDeck();//shuffle the Deck
+			cout << "****************************After the Shuffle**************************************" << endl;
+			cout << *deck;
+
+
+			//loop for the game until the end
+			Hand* hand = new Hand(deck);//drwa the 6 face-up card from the deck
+
+			Score *s = new Score();
+
+			//player get card for each term ,until both of them get 13 cards.
+			while (players[winnerIndex]->GetHandCard().size() < 10 && players[1 - winnerIndex]->GetHandCard().size() < 10) {
+				this->playGame(winnerIndex, hand, deck,this);
+				system("pause");
+				this->playGame(1 - winnerIndex, hand, deck,this);
+			}
+
+			s->computeScores(players[0], players[1], this->map);
+
+
+
+			cout << "----------------------------------------  THE END--------------------------------------------------" << endl;
+
+			system("pause");
+
+			break;
+
 
 		}
 		else {
@@ -693,50 +875,59 @@ void GameInitializer::assignCoin() {
 
 
 //loop 
-void GameInitializer::playGame(int mode,int playerNumber, Hand* hand, Deck* deck) {
+
+
+
+void GameInitializer::playGame(int playerNumber, Hand* hand, Deck* deck,GameInitializer *gm) {
 	hand->printHand();
 	int index = 0;
-	Strategy st(new Human());
-	if (mode == 0) {
-		
-		cout << players[playerNumber]->GetName();
+
+	Strategy st(new Greedy());
+
+	if (players[playerNumber]->GetName() == "Greedy Player") {
+
 		index = st.pick(hand);
-		
-		while (index >= 6 || index < 0) {
-			cout << players[playerNumber]->GetName();
-			index = st.pick(hand);
-		}
+
 	}
-	else if (mode == 1) {
-		st.set_strategy(new Greedy());
-		cout << players[playerNumber]->GetName();
+	else if (players[playerNumber]->GetName() == "Moderate Player") {
+		st.set_strategy(new Moderate());
 		index = st.pick(hand);
-		
-		
 	}
 	else {
-		st.set_strategy(new Moderate());
-		cout << players[playerNumber]->GetName();
+		st.set_strategy(new Human());
 		index = st.pick(hand);
 	}
 
+
+
+	while (index >= 6 || index < 0) {
+		cout << players[playerNumber]->GetName() << " your index input is invalid, please insert ** 0 - 5** " << endl;
+		cin >> index;
+	}
+
+
+	if (players[playerNumber]->GetCoin() < hand->getCost(index)) {
+		index = 0;
+	}
+
+		
 
 	Card *card = hand->exchange(index);
 
-
 	players[playerNumber]->SetHandCard(card);//select the card from the row
+
 	players[playerNumber]->PayCoin(hand->getCost(index));//pay the coin of that card
 	this->pool += hand->getCost(index);// put it at the top of the board
 
-	//**************************************************************************************************************************need to check if they have enough money
-
-	cout << "*************************************************************************" << endl;
-	cout << "Player " << players[playerNumber]->GetName() << " is doing action...  " << endl;
-
-	this->doAbility(players[playerNumber], card);
-	this->doAction(players[playerNumber], card);
-	cout << "*************************************************************************" << endl;
-
+	Phase* p1 = new Phase(hand, players[playerNumber], index+1);//Phase object
+	Viewer* v1 = new Viewer(p1);
+	Controller* c1 = new Controller(p1, v1);
+	c1->controll();//use controllor to play the game;
+	
+	State* s1 = new State(hand, players[playerNumber], this->getCurrentMap(), index + 1);//Phase object
+	stateViewer* v2 = new stateViewer(s1);
+	stateController* c2 = new stateController(s1, v2);
+	c2->controll(this);
 
 	////if(players[playerNumber]->GetHandCard()[0]->getAction1()=="Add2")
 	//cout << "" << players[playerNumber]->GetHandCard()[0]->getAbility();
@@ -775,75 +966,7 @@ void GameInitializer::playGame(int mode,int playerNumber, Hand* hand, Deck* deck
 
 
 
-//set initial Region
-void GameInitializer::SetInitialRegion(int winnerIndex) {
-	int regionNumber1;
-	int regionNumber2;
-	vector<Territory*> allTerritories;
-	allTerritories = map->GetAllTerritorys();
-	system("pause");
-	system("cls");
-	this->game_Show();
-	cout << "Start Initial Region for Players...\n";
 
-
-	// For first Player==> winner
-	cout << "\nSelect the starting Region for First Player(Winner) ==> [chose from 1 to " << allTerritories.size() << " ]\n\n"
-		<< players[winnerIndex]->GetName() << "  Plaese choose your starting region: ";
-	cin >> regionNumber1;
-	cout << endl;
-	while (regionNumber1 <= 0 || regionNumber1 > allTerritories.size()) {
-		cout << "Invalid Territory Input, Please insert number from 1 to " << allTerritories.size() << endl;
-		cin >> regionNumber1;
-	}
-
-	for (int i = 0; i < allTerritories.size(); i++) {
-		// first one to select, do not need to check if territories occupied 
-		if (allTerritories[i]->GetID() == regionNumber1) {
-			allTerritories[i]->SetPlayer(players[winnerIndex]->GetName());
-			allTerritories[i]->SetArmyNum(allTerritories[i]->GetArmyNum() + 4);
-			players[winnerIndex]->setArmy(players[1 - winnerIndex]->getArmy() - 4);
-			players[winnerIndex]->setTerritories(allTerritories[i]);
-			break;
-		}
-	}
-
-	// For second Player
-	cout << "Select the starting Region for Second Player ==> [choose from 1 to " << allTerritories.size() << " ]\n\n"
-		<< players[1 - winnerIndex]->GetName() << "  Please choose your starting region: ";
-	cin >> regionNumber2;
-	cout << endl;
-	while (regionNumber2 <= 0 || regionNumber2 > allTerritories.size()) {
-		cout << "Invalid Territory Input, Please insert number from 1 to " << allTerritories.size() << endl;
-		cin >> regionNumber2;
-	}
-	// check if region has been occupied
-	while (regionNumber2 == regionNumber1) {
-		cout << "Region has been occupied!!! Please Seclect Another Region....\n";
-		cin >> regionNumber2;
-	}
-	for (int j = 0; j < allTerritories.size(); j++) {
-		if (allTerritories[j]->GetID() == regionNumber2) {
-			allTerritories[j]->SetPlayer(players[1 - winnerIndex]->GetName());
-			allTerritories[j]->SetArmyNum(allTerritories[j]->GetArmyNum() + 4);
-
-
-			players[1 - winnerIndex]->setArmy(players[1 - winnerIndex]->getArmy() - 4);
-			players[1 - winnerIndex]->setTerritories(allTerritories[j]);
-			break;
-		}
-	}
-	cout << "After selected starting region, Player " << players[winnerIndex]->GetName() << " remains Army : " << players[winnerIndex]->getArmy() << "\n";
-	cout << "After selected starting region, Player " << players[1 - winnerIndex]->GetName() << " remains Army : " << players[1 - winnerIndex]->getArmy() << "\n\n";
-	cout << "Player " << players[winnerIndex]->GetName() << " has initial rigion: " << *players[winnerIndex]->GetTerritorys()[0];
-	cout << "Player " << players[1 - winnerIndex]->GetName() << " has initial rigion: " << *players[1 - winnerIndex]->GetTerritorys()[0] << endl;
-
-
-	system("pause");
-	system("cls");
-	this->game_Show();
-
-}
 
 
 
@@ -862,364 +985,822 @@ void GameInitializer::actions(Player* p, string action) {
 
 
 	if (action == "Move2") {
-		p->SetMove(2);
-		int move = p->GetMove();
 
+		if ((p->GetName() == "Greedy Player") || (p->GetName() == "Moderate Player")) {
 
-		while (move > 0) {
+			p->SetMove(2);
+			int move = p->GetMove();
+			while (move > 0) {
 
-			cout << "Your start region list :  " << endl;
-			for (int i = 0; i < allTerritories.size(); i++) {
-				if (allTerritories[i]->GetPlayer() == p->GetName()) {
-					cout << allTerritories[i]->GetID() << endl;
+				vector<int> temp;
+				for (int i = 0; i < allTerritories.size(); i++) {
+					if (allTerritories[i]->GetPlayer() == p->GetName()) {
+						if (allTerritories[i]->GetArmyNum() != 0) {
+							cout << allTerritories[i]->GetID() << endl;
+							temp.push_back(allTerritories[i]->GetID());
+						}
+						
+					}
 				}
+
+				startRegion = temp[rand() % temp.size()];
+				moveStep = rand() % (move+1);
+			
+				if (moveStep > move) {
+					cout << "Invalide input " << endl;
+					continue;
+				}
+				reachableTerri = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
+				for (int i = 0; i < reachableTerri.size(); i++) {
+					cout << i << "------    " << *reachableTerri[i] << endl;
+				}
+				if (reachableTerri.size() == 0) {
+					break;
+				}
+				int index = rand() % reachableTerri.size();
+				
+
+				p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
+				if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
+					IDtoTerri(startRegion)->SetPlayer("");
+				}
+				reachableTerri[index]->SetPlayer(p->GetName());
+
+				cout << *IDtoTerri(startRegion) << endl << endl;
+				cout << *reachableTerri[index] << endl << endl;
+				move -= moveStep;
+
 			}
 
-			cout << "where is your start region?" << endl;
-			cin >> startRegion;
 
-
-			cout << "How many step do you want to move?  your remaing move is : " << move << endl;
-			cin >> moveStep;
-			if (moveStep > move) {
-				cout << "Invalide input " << endl;
-				continue;
-			}
-			reachableTerri = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
-			for (int i = 0; i < reachableTerri.size(); i++) {
-				cout << i << "------    " << *reachableTerri[i] << endl;
-			}
-
-
-			int index;
-			cout << "Where do you want to move? 0 - for the first territory from above territory list." << endl;
-			cin >> index;
-
-			p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
-			if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
-				IDtoTerri(startRegion)->SetPlayer("");
-			}
-			reachableTerri[index]->SetPlayer(p->GetName());
-
-			cout << *IDtoTerri(startRegion) << endl << endl;
-			cout << *reachableTerri[index] << endl << endl;
-			move -= moveStep;
 
 		}
+		else {
+
+			p->SetMove(2);
+			int move = p->GetMove();
+			while (move > 0) {
+				cout << "Your start region list :  " << endl;
+				for (int i = 0; i < allTerritories.size(); i++) {
+					if (allTerritories[i]->GetPlayer() == p->GetName()) {
+						if (allTerritories[i]->GetArmyNum() != 0) {
+							cout << allTerritories[i]->GetID() << endl;
+							
+						}
+					}
+				}
+				cout << "where is your start region?" << endl;
+
+				cin >> startRegion;
+
+				cout << "How many step do you want to move?  your remaing move is : " << move << endl;
+
+				cin >> moveStep;
+
+				if (moveStep > move) {
+					cout << "Invalide input " << endl;
+					continue;
+				}
+				reachableTerri = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
+				for (int i = 0; i < reachableTerri.size(); i++) {
+					cout << i << "------    " << *reachableTerri[i] << endl;
+				}
+
+				int index;
+				cout << "Where do you want to move? 0 - for the first territory from above territory list." << endl;
+				cin >> index;
+
+				p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
+				if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
+					IDtoTerri(startRegion)->SetPlayer("");
+				}
+				reachableTerri[index]->SetPlayer(p->GetName());
+
+				cout << *IDtoTerri(startRegion) << endl << endl;
+				cout << *reachableTerri[index] << endl << endl;
+				move -= moveStep;
+
+			}
+
+		}
+
+
 
 	}
 
 	else if (action == "Move3") {
-		p->SetMove(3);
-		int move = p->GetMove();
-		while (move > 0) {
 
-			cout << "Your start region list :  " << endl;
-			for (int i = 0; i < allTerritories.size(); i++) {
-				if (allTerritories[i]->GetPlayer() == p->GetName()) {
-					cout << allTerritories[i]->GetID() << endl;
+
+
+		if ((p->GetName() == "Greedy Player") || (p->GetName() == "Moderate Player")) {
+
+
+
+
+			p->SetMove(3);
+
+			int move = p->GetMove();
+			while (move > 0) {
+
+				vector<int> temp;
+				for (int i = 0; i < allTerritories.size(); i++) {
+					if (allTerritories[i]->GetPlayer() == p->GetName()) {
+						if (allTerritories[i]->GetArmyNum() != 0) {
+							cout << allTerritories[i]->GetID() << endl;
+							temp.push_back(allTerritories[i]->GetID());
+						}
+					}
 				}
+
+				startRegion = temp[rand() % temp.size()];
+				moveStep = rand() % (move + 1);
+
+				if (moveStep > move) {
+					cout << "Invalide input " << endl;
+					continue;
+				}
+				reachableTerri = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
+				for (int i = 0; i < reachableTerri.size(); i++) {
+					cout << i << "------    " << *reachableTerri[i] << endl;
+				}
+				if (reachableTerri.size() == 0) {
+					break;
+				}
+				int index = rand() % reachableTerri.size();
+
+
+				p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
+				if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
+					IDtoTerri(startRegion)->SetPlayer("");
+				}
+				reachableTerri[index]->SetPlayer(p->GetName());
+
+				cout << *IDtoTerri(startRegion) << endl << endl;
+				cout << *reachableTerri[index] << endl << endl;
+				move -= moveStep;
+
 			}
 
-			cout << "where is your start region?" << endl;
-			cin >> startRegion;
-
-
-			cout << "How many step do you want to move?  your remaing move is : " << move << endl;
-			cin >> moveStep;
-			if (moveStep > move) {
-				cout << "Invalide input " << endl;
-				continue;
-			}
-			reachableTerri1 = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
-
-
-			reachableTerri2 = this->ReachableTerritoryouter(IDtoTerri(startRegion), moveStep, p);//move over water
-
-			reachableTerri = this->merge(reachableTerri1, reachableTerri2);
-
-
-
-			cout << "-------------------------------------------------------------------------" << endl;
-
-			for (int i = 0; i < reachableTerri.size(); i++) {
-				cout << i << "------    " << *reachableTerri[i] << endl;
-			}
-
-			cout << "-------------------------------------------------------------------------" << endl;
-			int index;
-			cout << "Where do you want to move? 0 - for the first territory from above territory list." << endl;
-			cin >> index;
-
-			p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
-
-			if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
-				IDtoTerri(startRegion)->SetPlayer("");
-			}
-
-			//set destination territory with player's name
-			reachableTerri[index]->SetPlayer(p->GetName());
-
-			cout << *IDtoTerri(startRegion) << endl << endl;
-			cout << *reachableTerri[index] << endl << endl;
-
-			move = move - moveStep;
 
 
 		}
+		else {
+
+			p->SetMove(3);
+			int move = p->GetMove();
+			while (move > 0) {
+				cout << "Your start region list :  " << endl;
+				for (int i = 0; i < allTerritories.size(); i++) {
+					if (allTerritories[i]->GetPlayer() == p->GetName()) {
+						if (allTerritories[i]->GetArmyNum() != 0) {
+							cout << allTerritories[i]->GetID() << endl;
+							
+						}
+					}
+				}
+				cout << "where is your start region?" << endl;
+
+				cin >> startRegion;
+
+				cout << "How many step do you want to move?  your remaing move is : " << move << endl;
+
+				cin >> moveStep;
+
+				if (moveStep > move) {
+					cout << "Invalide input " << endl;
+					continue;
+				}
+				reachableTerri = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
+				for (int i = 0; i < reachableTerri.size(); i++) {
+					cout << i << "------    " << *reachableTerri[i] << endl;
+				}
+
+				int index;
+				cout << "Where do you want to move? 0 - for the first territory from above territory list." << endl;
+				cin >> index;
+
+				p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
+				if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
+					IDtoTerri(startRegion)->SetPlayer("");
+				}
+				reachableTerri[index]->SetPlayer(p->GetName());
+
+				cout << *IDtoTerri(startRegion) << endl << endl;
+				cout << *reachableTerri[index] << endl << endl;
+				move -= moveStep;
+
+			}
+
+		}
+
+	
 	}
 
 	else if (action == "Move4") {
-		p->SetMove(4);
-		int move = p->GetMove();
-		while (move > 0) {
 
-			cout << "Your start region list :  " << endl;
-			for (int i = 0; i < allTerritories.size(); i++) {
-				if (allTerritories[i]->GetPlayer() == p->GetName()) {
-					cout << allTerritories[i]->GetID() << endl;
+
+
+
+		if ((p->GetName() == "Greedy Player") || (p->GetName() == "Moderate Player")) {
+
+
+			p->SetMove(4);
+
+			int move = p->GetMove();
+			while (move > 0) {
+
+				vector<int> temp;
+				for (int i = 0; i < allTerritories.size(); i++) {
+					if (allTerritories[i]->GetPlayer() == p->GetName()) {
+						if (allTerritories[i]->GetArmyNum() != 0) {
+							cout << allTerritories[i]->GetID() << endl;
+							temp.push_back(allTerritories[i]->GetID());
+						}
+					}
 				}
+
+				startRegion = temp[rand() % temp.size()];
+				moveStep = rand() % (move + 1);
+
+				if (moveStep > move) {
+					cout << "Invalide input " << endl;
+					continue;
+				}
+				reachableTerri = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
+				for (int i = 0; i < reachableTerri.size(); i++) {
+					cout << i << "------    " << *reachableTerri[i] << endl;
+				}
+				if (reachableTerri.size() == 0){
+					break;
+				}
+				int index = rand() % reachableTerri.size();
+
+
+
+				p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
+				if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
+					IDtoTerri(startRegion)->SetPlayer("");
+				}
+				reachableTerri[index]->SetPlayer(p->GetName());
+
+				cout << *IDtoTerri(startRegion) << endl << endl;
+				cout << *reachableTerri[index] << endl << endl;
+				move -= moveStep;
+
 			}
 
-			cout << "where is your start region?" << endl;
-			cin >> startRegion;
-
-
-			cout << "How many step do you want to move?  your remaing move is : " << move << endl;
-			cin >> moveStep;
-			if (moveStep > move) {
-				cout << "Invalide input " << endl;
-				continue;
-			}
-			reachableTerri1 = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
-			reachableTerri2 = this->ReachableTerritoryouter(IDtoTerri(startRegion), moveStep, p);//move over water
-			reachableTerri = this->merge(reachableTerri1, reachableTerri2);
-
-			for (int i = 0; i < reachableTerri.size(); i++) {
-				cout << i << "------    " << *reachableTerri[i] << endl;
-			}
-
-			int index;
-			cout << "Where do you want to move? 0 - for the first territory from above territory list." << endl;
-			cin >> index;
-
-			p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
-
-			if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
-				IDtoTerri(startRegion)->SetPlayer("");
-			}
-
-			//set destination territory with player's name
-			reachableTerri[index]->SetPlayer(p->GetName());
-
-			cout << *IDtoTerri(startRegion) << endl << endl;
-			cout << *reachableTerri[index] << endl << endl;
-
-			move = move - moveStep;
 
 
 		}
+		else {
+
+			p->SetMove(4);
+			int move = p->GetMove();
+			while (move > 0) {
+				cout << "Your start region list :  " << endl;
+				for (int i = 0; i < allTerritories.size(); i++) {
+					if (allTerritories[i]->GetPlayer() == p->GetName()) {
+						if (allTerritories[i]->GetArmyNum() != 0) {
+							cout << allTerritories[i]->GetID() << endl;
+							
+						}
+					}
+				}
+				cout << "where is your start region?" << endl;
+
+				cin >> startRegion;
+
+				cout << "How many step do you want to move?  your remaing move is : " << move << endl;
+
+				cin >> moveStep;
+
+				if (moveStep > move) {
+					cout << "Invalide input " << endl;
+					continue;
+				}
+				reachableTerri = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
+				for (int i = 0; i < reachableTerri.size(); i++) {
+					cout << i << "------    " << *reachableTerri[i] << endl;
+				}
+
+				int index;
+				cout << "Where do you want to move? 0 - for the first territory from above territory list." << endl;
+				cin >> index;
+
+				p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
+				if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
+					IDtoTerri(startRegion)->SetPlayer("");
+				}
+				reachableTerri[index]->SetPlayer(p->GetName());
+
+				cout << *IDtoTerri(startRegion) << endl << endl;
+				cout << *reachableTerri[index] << endl << endl;
+				move -= moveStep;
+
+			}
+
+		}
+		
 	}
 
 	else if (action == "Move5") {
-		p->SetMove(5);
-		int move = p->GetMove();
-		while (move > 0) {
 
-			cout << "Your start region list :  " << endl;
-			for (int i = 0; i < allTerritories.size(); i++) {
-				if (allTerritories[i]->GetPlayer() == p->GetName()) {
-					cout << allTerritories[i]->GetID() << endl;
+		if ((p->GetName() == "Greedy Player") || (p->GetName() == "Moderate Player")) {
+
+
+
+
+			p->SetMove(5);
+
+			int move = p->GetMove();
+			while (move > 0) {
+
+				vector<int> temp;
+				for (int i = 0; i < allTerritories.size(); i++) {
+					if (allTerritories[i]->GetPlayer() == p->GetName()) {
+						if (allTerritories[i]->GetArmyNum() != 0) {
+							cout << allTerritories[i]->GetID() << endl;
+							temp.push_back(allTerritories[i]->GetID());
+						}
+					}
 				}
+
+				startRegion = temp[rand() % temp.size()];
+				moveStep = rand() % (move + 1);
+
+				if (moveStep > move) {
+					cout << "Invalide input " << endl;
+					continue;
+				}
+				reachableTerri = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
+				for (int i = 0; i < reachableTerri.size(); i++) {
+					cout << i << "------    " << *reachableTerri[i] << endl;
+				}
+
+
+			
+
+				if (reachableTerri.size() == 0) {
+					break;
+				}
+				int index = rand() % reachableTerri.size();
+				
+
+				p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
+				if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
+					IDtoTerri(startRegion)->SetPlayer("");
+				}
+				reachableTerri[index]->SetPlayer(p->GetName());
+
+				cout << *IDtoTerri(startRegion) << endl << endl;
+				cout << *reachableTerri[index] << endl << endl;
+				move -= moveStep;
+
 			}
 
-			cout << "where is your start region?" << endl;
-			cin >> startRegion;
 
 
-			cout << "How many step do you want to move?  your remaing move is : " << move << endl;
-			cin >> moveStep;
-			if (moveStep > move) {
-				cout << "Invalide input " << endl;
-				continue;
+		}
+		else {
+
+			p->SetMove(5);
+			int move = p->GetMove();
+			while (move > 0) {
+				cout << "Your start region list :  " << endl;
+				for (int i = 0; i < allTerritories.size(); i++) {
+					if (allTerritories[i]->GetPlayer() == p->GetName()) {
+						if (allTerritories[i]->GetArmyNum() != 0) {
+							cout << allTerritories[i]->GetID() << endl;
+						
+						}
+					}
+				}
+				cout << "where is your start region?" << endl;
+
+				cin >> startRegion;
+
+				cout << "How many step do you want to move?  your remaing move is : " << move << endl;
+
+				cin >> moveStep;
+
+				if (moveStep > move) {
+					cout << "Invalide input " << endl;
+					continue;
+				}
+				reachableTerri = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
+				for (int i = 0; i < reachableTerri.size(); i++) {
+					cout << i << "------    " << *reachableTerri[i] << endl;
+				}
+
+				int index;
+				cout << "Where do you want to move? 0 - for the first territory from above territory list." << endl;
+				cin >> index;
+
+				p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
+				if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
+					IDtoTerri(startRegion)->SetPlayer("");
+				}
+				reachableTerri[index]->SetPlayer(p->GetName());
+
+				cout << *IDtoTerri(startRegion) << endl << endl;
+				cout << *reachableTerri[index] << endl << endl;
+				move -= moveStep;
+
 			}
-			reachableTerri1 = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
-			reachableTerri2 = this->ReachableTerritoryouter(IDtoTerri(startRegion), moveStep, p);//move over water
-			reachableTerri = this->merge(reachableTerri1, reachableTerri2);
-
-			for (int i = 0; i < reachableTerri.size(); i++) {
-				cout << i << "------    " << *reachableTerri[i] << endl;
-			}
-
-			int index;
-			cout << "Where do you want to move? 0 - for the first territory from above territory list." << endl;
-			cin >> index;
-
-			p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
-
-			if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
-				IDtoTerri(startRegion)->SetPlayer("");
-			}
-
-			//set destination territory with player's name
-			reachableTerri[index]->SetPlayer(p->GetName());
-
-			cout << *IDtoTerri(startRegion) << endl << endl;
-			cout << *reachableTerri[index] << endl << endl;
-
-			move = move - moveStep;
-
 
 		}
 	}
 
 	else if (action == "Move6") {
-		p->SetMove(6);
-		int move = p->GetMove();
-		while (move > 0) {
 
-			cout << "Your start region list :  " << endl;
-			for (int i = 0; i < allTerritories.size(); i++) {
-				if (allTerritories[i]->GetPlayer() == p->GetName() && allTerritories[i]->GetArmyNum() > 0) {
-					cout << allTerritories[i]->GetID() << endl;
+		if ((p->GetName() == "Greedy Player") || (p->GetName() == "Moderate Player")) {
+
+
+
+
+			p->SetMove(6);
+
+			int move = p->GetMove();
+			while (move > 0) {
+
+				vector<int> temp;
+				for (int i = 0; i < allTerritories.size(); i++) {
+					if (allTerritories[i]->GetPlayer() == p->GetName()) {
+						if (allTerritories[i]->GetArmyNum() != 0) {
+							cout << allTerritories[i]->GetID() << endl;
+							temp.push_back(allTerritories[i]->GetID());
+						}
+					}
 				}
+
+				startRegion = temp[rand() % temp.size()];
+				moveStep = rand() % (move + 1);
+
+				if (moveStep > move) {
+					cout << "Invalide input " << endl;
+					continue;
+				}
+				reachableTerri = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
+				for (int i = 0; i < reachableTerri.size(); i++) {
+					cout << i << "------    " << *reachableTerri[i] << endl;
+				}
+
+				if (reachableTerri.size() == 0) {
+					break;
+				}
+				int index = rand() % reachableTerri.size();
+
+
+				p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
+				if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
+					IDtoTerri(startRegion)->SetPlayer("");
+				}
+				reachableTerri[index]->SetPlayer(p->GetName());
+
+				cout << *IDtoTerri(startRegion) << endl << endl;
+				cout << *reachableTerri[index] << endl << endl;
+				move -= moveStep;
+
 			}
 
-			cout << "\nwhere is your start region?" << endl;
-			cin >> startRegion;
 
 
-			cout << "How many step do you want to move?  your remaing move is : " << move << endl;
-			cin >> moveStep;
-			if (moveStep > move) {
-				cout << "Invalide input " << endl;
-				continue;
+		}
+		else {
+
+			p->SetMove(6);
+			int move = p->GetMove();
+			while (move > 0) {
+				cout << "Your start region list :  " << endl;
+				for (int i = 0; i < allTerritories.size(); i++) {
+					if (allTerritories[i]->GetPlayer() == p->GetName()) {
+						if (allTerritories[i]->GetArmyNum() != 0) {
+							cout << allTerritories[i]->GetID() << endl;
+							
+						}
+					}
+				}
+				cout << "where is your start region?" << endl;
+
+				cin >> startRegion;
+
+				cout << "How many step do you want to move?  your remaing move is : " << move << endl;
+
+				cin >> moveStep;
+
+				if (moveStep > move) {
+					cout << "Invalide input " << endl;
+					continue;
+				}
+				reachableTerri = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
+				for (int i = 0; i < reachableTerri.size(); i++) {
+					cout << i << "------    " << *reachableTerri[i] << endl;
+				}
+
+				int index;
+				cout << "Where do you want to move? 0 - for the first territory from above territory list." << endl;
+				cin >> index;
+
+				p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
+				if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
+					IDtoTerri(startRegion)->SetPlayer("");
+				}
+				reachableTerri[index]->SetPlayer(p->GetName());
+
+				cout << *IDtoTerri(startRegion) << endl << endl;
+				cout << *reachableTerri[index] << endl << endl;
+				move -= moveStep;
+
 			}
-			reachableTerri1 = this->ReachableTerritoryInner(IDtoTerri(startRegion), moveStep, p);
-			reachableTerri2 = this->ReachableTerritoryouter(IDtoTerri(startRegion), moveStep, p);//move over water
-			reachableTerri = this->merge(reachableTerri1, reachableTerri2);
-
-			for (int i = 0; i < reachableTerri.size(); i++) {
-				cout << i << "------    " << *reachableTerri[i] << endl;
-			}
-
-			int index;
-			cout << "Where do you want to move? 0 - for the first territory from above territory list." << endl;
-			cin >> index;
-
-			p->MoveArmies(IDtoTerri(startRegion), reachableTerri[index], 1);
-
-			if (IDtoTerri(startRegion)->GetArmyNum() == 0 && IDtoTerri(startRegion)->GetBuildCity() == false) {
-				IDtoTerri(startRegion)->SetPlayer("");
-			}
-
-			//set destination territory with player's name
-			reachableTerri[index]->SetPlayer(p->GetName());
-
-			cout << *IDtoTerri(startRegion) << endl << endl;
-			cout << *reachableTerri[index] << endl << endl;
-
-			move = move - moveStep;
-
 
 		}
 	}
 	else if (action == "Add2") {
-		p->AddArmy(2);
-		cout << *p << endl;
+		p->PlaceNewArmies(p->GetTerritorys()[0], 2);
+		
+		cout <<" added 2 armies "<< endl;
 	}
 
 	else if (action == "Add3") {
-		p->AddArmy(3);
-		cout << *p << endl;
+		p->PlaceNewArmies(p->GetTerritorys()[0], 3);
+
+		cout << " added 3 armies " << endl;
 	}
 
 	else if (action == "Add4") {
 
-		p->AddArmy(4);
-		cout << *p << endl;
+		p->PlaceNewArmies(p->GetTerritorys()[0], 4);
+
+		cout << " added 4 armies " << endl;
 	}
 
 	else if (action == "BuildCity") {
-		do {
-			cout << "Where do you want to biuld city? insert 1-" << allTerritories.size() << endl;
-			cin >> ter;
-			if (ter > 0 && ter <= allTerritories.size()) {
-				bool flage = false;
-				for (int i = 0; i < allTerritories.size(); i++) {
+		if (p->GetName() == "Greedy Player" || p->GetName() == "Moderate Player") {
 
-					if (allTerritories[i]->GetID() == ter && allTerritories[i]->GetPlayer() == p->GetName()) {
-						p->BuildCity(allTerritories[i]);//biuld the city if the name of territories is yours
-						cout << "You get a token in your territory" << endl;
-						allTerritories[i]->SetTokenName("token");
-						allTerritories[i]->SetIsToken(true);
-						flage = true;
-						break;
-					}
+			vector <int> temp;
+			int temp2 = 0;
+			for (int i = 0; i < allTerritories.size(); i++) {
+
+				if (allTerritories[i]->GetPlayer() == p->GetName()) {
+					temp.push_back(i);
+					temp2 = rand() % temp.size();
+					p->BuildCity(allTerritories[temp2]);//biuld the city if the name of territories is yours
+					cout << "You get a token in your territory" << endl;
+					allTerritories[i]->SetTokenName("token");
+					allTerritories[i]->SetIsToken(true);
 
 				}
-				if (flage = false) {
-					cout << " this is not your territorie, you can not build city here!" << endl;
-					actions(p, "BuildCity");
-				}
+
 			}
-			else
-				cout << "you entered an invalidate number, please reenter!" << endl;
-		} while (ter <= 0 || ter > allTerritories.size());
+
+		}
+		else {
+			do {
+				cout << "Where do you want to biuld city? insert 1-" << allTerritories.size() << endl;
+				cin >> ter;
+				if (ter > 0 && ter <= allTerritories.size()) {
+					bool flage = false;
+					for (int i = 0; i < allTerritories.size(); i++) {
+
+						if (allTerritories[i]->GetID() == ter && allTerritories[i]->GetPlayer() == p->GetName()) {
+							p->BuildCity(allTerritories[i]);//biuld the city if the name of territories is yours
+							cout << "You get a token in your territory" << endl;
+							allTerritories[i]->SetTokenName("token");
+							allTerritories[i]->SetIsToken(true);
+							flage = true;
+							break;
+						}
+
+					}
+					if (flage = false) {
+						cout << " this is not your territorie, you can not build city here!" << endl;
+						actions(p, "BuildCity");
+					}
+				}
+				else
+					cout << "you entered an invalidate number, please reenter!" << endl;
+			} while (ter <= 0 || ter > allTerritories.size());
+		}
 	}
 	else {
 		string name = "";
-		do {
-			cout << "The army from where you want to destory? " << endl;
-			cout << "you have " << endl;
+		if (p->GetName() == "Greedy Player" || p->GetName() == "Moderate Player") {
+			vector<int> temp;
 			for (int i = 0; i < allTerritories.size(); i++) {
 				if (allTerritories[i]->GetPlayer() != "") {
-					cout << allTerritories[i]->GetID() << "         ";
+					temp.push_back(allTerritories[i]->GetID());
 				}
 			}
-			cout << "   territories can be destory! please insert id" << endl;
-			cin >> ter;
-			if (ter > 0 && ter <= allTerritories.size()) {
-				bool flag = false;
+			ter = temp[rand() % temp.size()];
 
-				for (int i = 0; i < allTerritories.size(); i++) {
-					if (allTerritories[i]->GetID() == ter&&allTerritories[i]->GetArmyNum() > 0) {
-						name = allTerritories[i]->GetPlayer();
-						for (int i = 0; i < players.size(); i++) {
 
-							if (players[i]->GetName() == name) {
-								if (players[i]->getIm() == false) {
+			for (int i = 0; i < allTerritories.size(); i++) {
+				if (allTerritories[i]->GetID() == ter && allTerritories[i]->GetArmyNum() > 0) {
+					name = allTerritories[i]->GetPlayer();
+					for (int i = 0; i < players.size(); i++) {
 
-									p->DestroyArmy(allTerritories[i], 1);
-								}
-								else {
-									players[i]->setIm(false);
+						if (players[i]->GetName() == name) {
+							if (players[i]->getIm() == false) {
 
-									cout << "The player is immute to be attacked once!" << endl;
-								}
+								p->DestroyArmy(allTerritories[i], 1);
+							}
+							else {
+								players[i]->setIm(false);
+
+								cout << "The player is immute to be attacked once!" << endl;
 							}
 						}
+					}
 
 
-						//find the territories and destory 1 army
-						flag = true;
-						break;
+					//find the territories and destory 1 army
+
+				}
+
+			}
+
+		}
+
+
+
+		else {
+			do {
+				cout << "The army from where you want to destory? " << endl;
+				cout << "you have " << endl;
+				for (int i = 0; i < allTerritories.size(); i++) {
+					if (allTerritories[i]->GetPlayer() != "") {
+						cout << allTerritories[i]->GetID() << "         ";
+					}
+				}
+				cout << "   territories can be destory! please insert id" << endl;
+				cin >> ter;
+				if (ter > 0 && ter <= allTerritories.size()) {
+					bool flag = false;
+
+					for (int i = 0; i < allTerritories.size(); i++) {
+						if (allTerritories[i]->GetID() == ter && allTerritories[i]->GetArmyNum() > 0) {
+							name = allTerritories[i]->GetPlayer();
+							for (int i = 0; i < players.size(); i++) {
+
+								if (players[i]->GetName() == name) {
+									if (players[i]->getIm() == false) {
+
+										p->DestroyArmy(allTerritories[i], 1);
+									}
+									else {
+										players[i]->setIm(false);
+
+										cout << "The player is immute to be attacked once!" << endl;
+									}
+								}
+							}
+
+
+							//find the territories and destory 1 army
+							flag = true;
+							break;
+						}
+
+					}
+
+					if (flag = false) {
+						cout << "There is no army on this territories." << endl;
+						actions(p, "Destory");
 					}
 
 				}
+				else
+					cout << "you entered an invalidate number, please reenter!" << endl;
+			} while (ter <= 0 || ter > allTerritories.size());
+		}
 
-				if (flag = false) {
-					cout << "There is no army on this territories." << endl;
-					actions(p, "Destory");
-				}
 
-			}
-			else
-				cout << "you entered an invalidate number, please reenter!" << endl;
-		} while (ter <= 0 || ter > allTerritories.size());
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	}
 }
+
+
+
+//set initial Region
+void GameInitializer::SetInitialRegion(int winnerIndex) {
+	int regionNumber1;
+	int regionNumber2;
+	vector<Territory*> allTerritories;
+	allTerritories = map->GetAllTerritorys();
+	system("pause");
+	system("cls");
+	this->game_Show();
+	cout << "Start Initial Region for Players...\n";
+
+	// For first Player==> winner <======================================
+
+	if (players[winnerIndex]->GetName() == "Greedy Player" || players[winnerIndex]->GetName() == "Moderate Player") {
+		// For HUMAN
+		cout << "\nSelecting the starting Region for " << players[winnerIndex]->GetName() << " ==> [chose from 1 to " << allTerritories.size() << " ]..." << endl;
+		regionNumber1 = ((rand() % allTerritories.size()) + 1); // from 1 to maxsize
+
+	}
+	else {
+		// For HUMAN
+		cout << "\nSelect the starting Region for First Player(Winner) ==> [chose from 1 to " << allTerritories.size() << " ]\n\n"
+			<< players[winnerIndex]->GetName() << "  Plaese choose your starting region: \n";
+		cin >> regionNumber1;
+		cout << endl;
+		while (regionNumber1 <= 0 || regionNumber1 > allTerritories.size()) {
+			cout << "Invalid Territory Input, Please insert number from 1 to " << allTerritories.size() << endl;
+			cin >> regionNumber1;
+		}
+
+	}
+	for (int i = 0; i < allTerritories.size(); i++) {
+		// first one to select, do not need to check if territories occupied 
+		if (allTerritories[i]->GetID() == regionNumber1) {
+			allTerritories[i]->SetPlayer(players[winnerIndex]->GetName());
+			allTerritories[i]->SetArmyNum(allTerritories[i]->GetArmyNum() + 4);
+			players[winnerIndex]->setArmy(players[1 - winnerIndex]->getArmy() - 4);
+			players[winnerIndex]->setTerritories(allTerritories[i]);
+			break;
+		}
+	}
+
+	// For second Player===================================
+
+	if (players[1 - winnerIndex]->GetName() == "Greedy Player" || players[1 - winnerIndex]->GetName() == "Moderate Player") {
+		// For HUMAN
+		cout << "\nSelecting the starting Region for " << players[1 - winnerIndex]->GetName() << " ==> [chose from 1 to " << allTerritories.size() << " ]..." << endl;
+		regionNumber2 = ((rand() % allTerritories.size()) + 1); // from 1 to max size
+																// check if region has been occupied
+		while (regionNumber2 == regionNumber1) {
+			cout << "Region has been occupied!!! Please Seclect Another Region....\n";
+			regionNumber2 = ((rand() % allTerritories.size()) + 1); //re-choosing
+		}
+	}
+	else {
+		// For second Player
+		cout << "Select the starting Region for Second Player ==> [choose from 1 to " << allTerritories.size() << " ]\n\n"
+			<< players[1 - winnerIndex]->GetName() << "  Please choose your starting region: \n";
+		cin >> regionNumber2;
+		cout << endl;
+		while (regionNumber2 <= 0 || regionNumber2 > allTerritories.size()) {
+			cout << "Invalid Territory Input, Please insert number from 1 to " << allTerritories.size() << endl;
+			cin >> regionNumber2;
+		}
+		// check if region has been occupied
+		while (regionNumber2 == regionNumber1) {
+			cout << "Region has been occupied!!! Please Seclect Another Region....\n";
+			cin >> regionNumber2;
+		}
+	}
+
+	for (int j = 0; j < allTerritories.size(); j++) {
+		if (allTerritories[j]->GetID() == regionNumber2) {
+			allTerritories[j]->SetPlayer(players[1 - winnerIndex]->GetName());
+			allTerritories[j]->SetArmyNum(allTerritories[j]->GetArmyNum() + 4);
+
+
+			players[1 - winnerIndex]->setArmy(players[1 - winnerIndex]->getArmy() - 4);
+			players[1 - winnerIndex]->setTerritories(allTerritories[j]);
+			break;
+		}
+	}
+
+	cout << "After selected starting region, Player " << players[winnerIndex]->GetName() << " remains Army : " << players[winnerIndex]->getArmy() << "\n";
+	cout << "After selected starting region, Player " << players[1 - winnerIndex]->GetName() << " remains Army : " << players[1 - winnerIndex]->getArmy() << "\n\n";
+	cout << "Player " << players[winnerIndex]->GetName() << " has initial rigion: " << *players[winnerIndex]->GetTerritorys()[0];
+	cout << "Player " << players[1 - winnerIndex]->GetName() << " has initial rigion: " << *players[1 - winnerIndex]->GetTerritorys()[0] << endl;
+
+
+	system("pause");
+	system("cls");
+	this->game_Show();
+
+}
+
 
 
 
@@ -1243,15 +1824,24 @@ void GameInitializer::doAction(Player* p, Card* c1) {
 		action2 = c1->getAction2();
 		cout << " The actions are: action1: " << action1 << " action2: " << action2 << endl;
 		do {
-			cout << "which action you wants to do? ( insert 1 or 2 ) " << endl;
-			cin >> choice;
-			if (choice == 1)
-				actions(p, action1);
-			else if (choice == 2)
-				actions(p, action2);
-			else
-				cout << "you have entered a wrong number, please reenter!" << endl;
+			if (p->GetName() == "Greedy Player" || p->GetName() == "Moderate Player") {
+
+				choice = (rand() % 2) + 1; // 1 or 2
+			}
+			else {
+
+				cout << "which action you wants to do? ( insert 1 or 2 ) " << endl;
+				cin >> choice;
+				if (choice == 1)
+					actions(p, action1);
+				else if (choice == 2)
+					actions(p, action2);
+				else
+					cout << "you have entered a wrong number, please reenter!" << endl;
+			}
+
 		} while (choice != 1 && choice != 2);
+
 	}
 
 
